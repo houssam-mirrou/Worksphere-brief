@@ -7,147 +7,170 @@
 
 <body>
     <main class="p-8 bg-[#F5F2EB]">
-        <div class="bg-[#FAF8F3] rounded-[16px]">
-            <div class="bg-[#EDEDEC] p-8 rounded-[16px]">
-                <h1 class="text-4xl font-bold">WorkSphere</h1>
-                <h2>Unassigend Staff</h2>
-                <div class="workers-holder">
+        <div class="flex flex-col gap-5">
+            <div class="bg-[#FAF8F3] rounded-[16px] place-content-between flex flex-col md:flex-row gap-7">
+                <div class="flex flex-col bg-[#EDEDEC] p-8 rounded-[16px] gap-4 md:w-1/4">
+                    <h1 class="text-4xl font-bold">WorkSphere</h1>
+                    <h2 class="text-3xl">Unassigend Staff</h2>
+                    <div class="workers-holder">
 
-                </div>
-                <button>Add New Worker</button>
-            </div>
-            <div class="bg-plan_phone bg-no-repeat bg-contain bg-center w-full h-full phone-pla">
-
-            </div>
-            <div class="bg-plan_desktop bg-no-repeat bg-contain bg-center w-full h-full desktop-plan hidden">
-
-            </div>
-        </div>
-        <div>
-            <form>
-                <h1>Add new worker</h1>
-                <div>
-                    <label for="first-name">First Name</label>
-                    <input type="text" id="first-name" placeholder="Your First Name">
-                </div>
-                <div>
-                    <label for="last-name">Last Name</label>
-                    <input type="text" id="last-name" placeholder="Your Last Name">
-                </div>
-                <div>
-                    <label for="role">Role</label>
-                    <input list="roles" id="roleInput" name="roleInput" placeholder="Choose a role">
-
-                    <datalist id="roles">
-                        <option value="Receptionist">
-                        <option value="IT Technician">
-                        <option value="Security Agent">
-                        <option value="Manager">
-                        <option value="Cleaning">
-                        <option value="Other">
-                    </datalist>
-                </div>
-                <div class="flex felx-row items-center">
-                    <div class="w-20 h-20 rounded-full bg-[#D9D9D9]">
                     </div>
-                    <input type="file" id="image" value="Choose your image">
+                    <div class="flex justify-center">
+                        <button class="bg-[#3BB273] w-60 h-14 text-white rounded-[16px] font-bold text-xl">Add New
+                            Worker</button>
+                    </div>
                 </div>
-                <div>
-                    <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="Enter Your mail">
-                </div>
-                <div>
-                    <label for="phone">Phone</label>
-                    <input type="tel" id="email" placeholder="Enter Your Phone Number">
-                </div>
-                <div>
+                <div class="phone-plan items-center justify-center">
                     <div>
-                        <i></i>
+                        <img src="img/phone.png" class="rounded-[16px] w-full " alt="">
+                    </div>
+                </div>
+                <div class="desktop-plan w-3/4 p-20 hidden">
+                    <div>
+                        <img src="img/desktop.png" alt="" class="rounded-[16px] w-full">
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col items-center p-52 hidden">
+                <form class="ajouter-worker bg-[#EDEDEC] p-12 text-2xl flex flex-col gap-4 rounded-[16px]">
+                    <h1 class="text-5xl font-semibold">Add new worker</h1>
+                    <div class="flex flex-row place-content-between items-center">
+                        <label for="first-name">First Name</label>
+                        <input type="text" id="first-name" class="rounded-2xl p-4 bg-[#F5F2EB]">
+                    </div>
+                    <div class="flex flex-row place-content-between items-center">
+                        <label for="last-name">Last Name</label>
+                        <input type="text" id="last-name" class="rounded-2xl p-4 bg-[#F5F2EB]">
+                    </div>
+                    <div class="flex flex-row place-content-between items-center">
+                        <label for="role">Role</label>
+                        <input list="roles" id="roleInput" name="roleInput" class="rounded-2xl p-4 bg-[#F5F2EB]">
+
+                        <datalist id="roles">
+                            <option value="Receptionist">
+                            <option value="IT Technician">
+                            <option value="Security Agent">
+                            <option value="Manager">
+                            <option value="Cleaning">
+                            <option value="Other">
+                        </datalist>
+                    </div>
+                    <div class="flex felx-row items-center gap-6">
+                        <div class="w-20 h-20 rounded-full bg-[#D9D9D9]">
+                        </div>
+                        <input type="file" id="image" value="Choose your image">
+                    </div>
+                    <div class="flex flex-row place-content-between">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" class="rounded-2xl p-4 bg-[#F5F2EB]">
+                    </div>
+                    <div class="flex flex-row place-content-between">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="email" class="rounded-2xl p-4 bg-[#F5F2EB]">
+                    </div>
+                    <div class="flex flex-col gap-5">
                         <div>
-                            Add Experience
                             <i></i>
+                            <div>
+                                Add Experience
+                                <i></i>
+                            </div>
+                        </div>
+                        <div class="flex flex-row place-content-between">
+                            <label for="exp-title">Job Title</label>
+                            <input type="text" class="rounded-2xl p-4 bg-[#F5F2EB] exp-title"
+                                placeholder="Job title (ex: IT Technician)">
+                        </div>
+                        <div class="flex flex-row place-content-between">
+                            <label for="exp-company">Company</label>
+                            <input type="text" class="rounded-2xl p-4 bg-[#F5F2EB] exp-company"
+                                placeholder="Company (ex: OCP)">
+                        </div>
+                        <div class="flex flex-row place-content-between">
+                            <label for="exp-duration-start">Start Date:</label>
+                            <input type="date" class="rounded-2xl p-4 bg-[#F5F2EB] exp-duration-start"
+                                name="exp-duration-start">
+                        </div>
+                        <div class="flex flex-row place-content-between">
+                            <label for="exp-duration-end">End Date:</label>
+                            <input type="date" class="rounded-2xl p-4 bg-[#F5F2EB] exp-duration-end"
+                                name="exp-duration-end">
+                        </div>
+                        <div class="flex flex-col place-content-between">
+                            <label for="exp-description">Description</label>
+                            <textarea class="rounded-2xl p-4 bg-[#F5F2EB] exp-description"
+                                placeholder="Description (ex: Maintenance of servers)"></textarea>
+                        </div>
+                        <div class="flex flex-row place-content-between gap-2">
+                            <button type="button"
+                                class="cancel-btn bg-[#D64545] w-2/5 rounded-[16px] p-5 text-white">Cancel</button>
+                            <button type="button"
+                                class="add-btn bg-[#3BB273] w-2/5 rounded-[16px] p-5 text-white">Add</button>
                         </div>
                     </div>
-                    <div>
-                        <label for="exp-title">Job Title</label>
-                        <input type="text" class="exp-title" placeholder="Job title (ex: IT Technician)">
+                </form>
+
+
+            </div>
+            <div class="flex items-center justify-center">
+                <div class=" bg-[#EDEDEC] p-12 text-2xl flex flex-col gap-4 rounded-[16px] w-[680px] hidden">
+                    <div class="flex flex-row gap-4">
+                        <div class="w-20 h-20 rounded-full bg-[#D9D9D9]">
+                        </div>
+                        <div class="flex flex-row w-10/12 place-content-between items-center">
+                            <div>
+                                <h1>First Name</h1>
+                                <h2>Last Name</h2>
+                            </div>
+                            <div>
+                                <button class="bg-[#F0A500] p-4 rounded-[16px] w-20 text-white">Edit</button>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <label for="exp-company">Company</label>
-                        <input type="text" class="exp-company" placeholder="Company (ex: OCP)">
-                    </div>
-                    <div>
-                        <label for="exp-duration-start">Start Date:</label>
-                        <input type="date" id="exp-duration-start" name="exp-duration-start">
-                    </div>
-                    <div>
-                        <label for="exp-duration-end">End Date:</label>
-                        <input type="date" id="exp-duration-end" name="exp-duration-end">
-                    </div>
-                    <div>
-                        <label for="exp-description">Description</label>
-                        <textarea class="exp-description"
-                            placeholder="Description (ex: Maintenance of servers)"></textarea>
-                    </div>
-                    <div>
-                        <button type="button" class="remove-exp-btn">Add</button>
-                        <button type="button" class="remove-exp-btn">Remove</button>
-                    </div>
-                </div>
-            </form>
-            <div>
-                <div class="flex flex-row">
-                    <div class="w-20 h-20 rounded-full bg-[#D9D9D9]">
-                    </div>
-                    <div class="flex flex-row w-10/12 place-content-between items-center">
+                    <div class="flex flex-row place-content-between">
+                        <h1>Role</h1>
                         <div>
-                            <h1>First Name</h1>
-                            <h2>Last Name</h2>
+                            <h1>It thecnicien</h1>
                         </div>
+                    </div>
+
+                    <div class="flex flex-row place-content-between">
+                        <h1>Email</h1>
                         <div>
-                            <button>Edit</button>
+                            <h1>houssam@gmail.com</h1>
                         </div>
                     </div>
-                </div>
-                <div>
-                    <h1>Role</h1>
-                    <div>
-                        
-                    </div>
-                </div>
 
-                <div>
-                    <h1>Email</h1>
-                    <div>
-                        
+                    <div class="flex flex-row place-content-between">
+                        <h1>Phone</h1>
+                        <div>
+                            <h1>+21254687924</h1>
+                        </div>
                     </div>
-                </div>
+                    <div>
+                        <h1>Experiences</h1>
+                        <div class="experiences">
 
-                <div>
-                    <h1>Phone</h1>
-                    <div>
-                      
+                        </div>
                     </div>
-                </div>
-                <h1>Experiences</h1>
-                <div>
-                    <h1>Title</h1>
                     <div>
-                        
+                        <h1>Title</h1>
+                        <div>
+
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <h1>Company</h1>
+                    <div>
+                        <h1>Company</h1>
+                        <div>
+
+                        </div>
+                    </div>
+                    <h1>Description</h1>
                     <div>
 
                     </div>
-                </div>
-                <h1>Description</h1>
-                <div>
-                    
                 </div>
             </div>
-
         </div>
     </main>
 
