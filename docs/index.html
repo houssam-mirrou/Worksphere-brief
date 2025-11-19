@@ -3,40 +3,26 @@
 <head>
     <title>Hello</title>
     <link rel="stylesheet" href="css/style.css">
+    <script src="script/script.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 </head>
 
-<body>
-    <main class="p-8 bg-[#F5F2EB]">
-        <div class="bg-[#FAF8F3] rounded-[16px]">
-            <div class="bg-[#EDEDEC] p-8 rounded-[16px]">
-                <h1 class="text-4xl font-bold">WorkSphere</h1>
-                <h2>Unassigend Staff</h2>
-                <div class="workers-holder">
-
-                </div>
-                <button>Add New Worker</button>
-            </div>
-            <div class="bg-plan_phone bg-no-repeat bg-contain bg-center w-full h-full phone-pla">
-
-            </div>
-            <div class="bg-plan_desktop bg-no-repeat bg-contain bg-center w-full h-full desktop-plan hidden">
-
-            </div>
-        </div>
-        <div>
-            <form>
-                <h1>Add new worker</h1>
-                <div>
+<body class="bg-[#F5F2EB]">
+    <div class="form-container hidden w-full bg-black/50 pl-52 pr-52 pt-4 pb-4 z-20 h-full fixed ">
+        <div class="flex flex-col items-center ">
+            <form class="ajouter-worker bg-[#EDEDEC] p-12 text-2xl flex flex-col gap-4 rounded-[16px] overflow-y-scroll max-h-[90vh]" enctype="multipart/form-data" >
+                <h1 class="text-5xl font-semibold">Add new worker</h1>
+                <div class="flex flex-row place-content-between items-center">
                     <label for="first-name">First Name</label>
-                    <input type="text" id="first-name" placeholder="Your First Name">
+                    <input type="text" id="first-name" class="rounded-2xl p-4 bg-[#F5F2EB]" placeholder="First Name">
                 </div>
-                <div>
+                <div class="flex flex-row place-content-between items-center">
                     <label for="last-name">Last Name</label>
-                    <input type="text" id="last-name" placeholder="Your Last Name">
+                    <input type="text" id="last-name" class="rounded-2xl p-4 bg-[#F5F2EB] " placeholder="Last Name">
                 </div>
-                <div>
+                <div class="flex flex-row place-content-between items-center">
                     <label for="role">Role</label>
-                    <input list="roles" id="roleInput" name="roleInput" placeholder="Choose a role">
+                    <input list="roles" id="role" class="rounded-2xl p-4 bg-[#F5F2EB]" placeholder="Role">
 
                     <datalist id="roles">
                         <option value="Receptionist">
@@ -47,107 +33,172 @@
                         <option value="Other">
                     </datalist>
                 </div>
-                <div class="flex felx-row items-center">
+                <div class="flex felx-row items-center place-content-between">
                     <div class="w-20 h-20 rounded-full bg-[#D9D9D9]">
                     </div>
-                    <input type="file" id="image" value="Choose your image">
+                    <input type="url" id="image" class="rounded-2xl p-4 bg-[#F5F2EB]" placeholder="Image URL">
                 </div>
-                <div>
+                <div class="flex flex-row place-content-between items-center">
                     <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="Enter Your mail">
+                    <input type="email" id="email" class="rounded-2xl p-4 bg-[#F5F2EB]" placeholder="Your Email">
                 </div>
-                <div>
+                <div class="flex flex-row place-content-between items-center">
                     <label for="phone">Phone</label>
-                    <input type="tel" id="email" placeholder="Enter Your Phone Number">
+                    <input type="tel" id="phone" class="rounded-2xl p-4 bg-[#F5F2EB]" placeholder="Your Phone Number">
                 </div>
-                <div>
-                    <div>
-                        <i></i>
-                        <div>
+                <div class="flex flex-col gap-5">
+                    <div class="flex flex-row items-center">
+                        <div class="flex flex-row place-content-between w-full">
                             Add Experience
-                            <i></i>
+                            <i class="fa-solid fa-plus add-experience"></i>
                         </div>
                     </div>
-                    <div>
-                        <label for="exp-title">Job Title</label>
-                        <input type="text" class="exp-title" placeholder="Job title (ex: IT Technician)">
+                    <div class="flex flex-col gap-5 experiences-container">
+                        
                     </div>
-                    <div>
-                        <label for="exp-company">Company</label>
-                        <input type="text" class="exp-company" placeholder="Company (ex: OCP)">
-                    </div>
-                    <div>
-                        <label for="exp-duration-start">Start Date:</label>
-                        <input type="date" id="exp-duration-start" name="exp-duration-start">
-                    </div>
-                    <div>
-                        <label for="exp-duration-end">End Date:</label>
-                        <input type="date" id="exp-duration-end" name="exp-duration-end">
-                    </div>
-                    <div>
-                        <label for="exp-description">Description</label>
-                        <textarea class="exp-description"
-                            placeholder="Description (ex: Maintenance of servers)"></textarea>
-                    </div>
-                    <div>
-                        <button type="button" class="remove-exp-btn">Add</button>
-                        <button type="button" class="remove-exp-btn">Remove</button>
-                    </div>
+
+                </div>
+                <div class="flex flex-row place-content-between items-center gap-2">
+                    <button type="button"
+                        class="cancel-btn bg-[#D64545] w-2/5 rounded-[16px] p-5 text-white">Cancel</button>
+                    <button type="button" class="add-btn bg-[#3BB273] w-2/5 rounded-[16px] p-5 text-white">Add</button>
                 </div>
             </form>
-            <div>
-                <div class="flex flex-row">
-                    <div class="w-20 h-20 rounded-full bg-[#D9D9D9]">
+
+
+        </div>
+    </div>
+    <main class="p-8 bg-[#F5F2EB]">
+        <div class="flex flex-col gap-5 h-full">
+            <div
+                class="bg-[#FAF8F3] rounded-[16px] place-content-between flex flex-col md:flex-row gap-7 side-image-container h-full">
+                <div class="flex flex-col bg-[#EDEDEC] p-8 rounded-[16px] gap-4 md:w-1/4">
+                    <h1 class="text-4xl font-bold">WorkSphere</h1>
+                    <h2 class="text-3xl">Unassigend Staff</h2>
+                    <div class="workers-holder flex flex-col gap-3 md:h-5/6 md:overflow-y-auto">
+
                     </div>
-                    <div class="flex flex-row w-10/12 place-content-between items-center">
-                        <div>
-                            <h1>First Name</h1>
-                            <h2>Last Name</h2>
+                    <div class="flex justify-center">
+                        <button class="bg-[#3BB273] w-60 h-14 text-white rounded-[16px] font-bold text-xl"
+                            id="add-worker">Add New
+                            Worker</button>
+                    </div>
+                </div>
+                <div class="flex items-center justify-center">
+                    <div class="flex relative phone-plan lg:hidden z-10">
+                        <img src="img/phone.png" class="rounded-[16px] w-full " alt="">
+                        <div
+                            class="absolute inset-0 grid grid-cols-[repeat(32,minmax(0,1fr))] grid-rows-[repeat(64,minmax(0,1fr))] ">
+                            <div
+                                class="border border-red-500 col-start-[2] col-end-[19] row-start-3 row-end-[19] reception-phone">
+                            </div>
+                            <div
+                                class="border border-red-500 col-start-[19] col-end-[32] row-start-3 row-end-[19] conference-phone">
+                            </div>
+                            <div
+                                class="border border-red-500 col-start-[2] col-end-[14] row-start-[34] row-end-[48] break-room-phone">
+                            </div>
+                            <div
+                                class="border border-red-500 col-start-[19] col-end-[32] row-start-[34] row-end-[48] server-phone">
+                            </div>
+                            <div
+                                class="border border-red-500 col-start-[2] col-end-[14] row-start-[48] row-end-[62] archive-phone">
+                            </div>
+                            <div
+                                class="border border-red-500 col-start-[19] col-end-[32] row-start-[48] row-end-[62] it-room-phone">
+                            </div>
+
                         </div>
-                        <div>
-                            <button>Edit</button>
+                    </div>
+                </div>
+                <div class="items-center justify-center hidden lg:flex">
+                    <div class="flex relative desktop-plan w-3/4 z-10">
+                        <img src="img/desktop.png" alt="" class="rounded-[16px] w-full">
+                        <div
+                            class="absolute inset-0 grid grid-cols-[repeat(62,minmax(0,1fr))] grid-rows-[repeat(62,minmax(0,1fr))] ">
+                            <div
+                                class="border border-red-500 col-start-[3] col-end-[24] row-start-4 row-end-[25] conference-desktop">
+                            </div>
+                            <div
+                                class="border border-red-500 col-start-[3] col-end-[24] row-start-[25] row-end-[60] reception-desktop">
+                            </div>
+                            <div
+                                class="border border-red-500 col-start-[37] col-end-[49] row-start-[4] row-end-[27] server-desktop">
+                            </div>
+                            <div
+                                class="border border-red-500 col-start-[37] col-end-[49] row-start-[37] row-end-[60] break-room-desktop">
+                            </div>
+                            <div
+                                class="border border-red-500 col-start-[49] col-end-[61] row-start-[37] row-end-[60] archive-desktop">
+                            </div>
+                            <div
+                                class="border border-red-500 col-start-[49] col-end-[61] row-start-[4] row-end-[27] it-room-desktop">
+                            </div>
+
                         </div>
                     </div>
-                </div>
-                <div>
-                    <h1>Role</h1>
-                    <div>
-                        
-                    </div>
-                </div>
-
-                <div>
-                    <h1>Email</h1>
-                    <div>
-                        
-                    </div>
-                </div>
-
-                <div>
-                    <h1>Phone</h1>
-                    <div>
-                      
-                    </div>
-                </div>
-                <h1>Experiences</h1>
-                <div>
-                    <h1>Title</h1>
-                    <div>
-                        
-                    </div>
-                </div>
-                <div>
-                    <h1>Company</h1>
-                    <div>
-
-                    </div>
-                </div>
-                <h1>Description</h1>
-                <div>
-                    
                 </div>
             </div>
 
+            <div class="flex items-center justify-center">
+                <div class=" bg-[#EDEDEC] p-12 text-2xl flex flex-col gap-4 rounded-[16px] w-[680px] hidden">
+                    <div class="flex flex-row gap-4">
+                        <div class="w-20 h-20 rounded-full bg-[#D9D9D9]">
+                        </div>
+                        <div class="flex flex-row w-10/12 place-content-between items-center">
+                            <div>
+                                <h1>First Name</h1>
+                                <h2>Last Name</h2>
+                            </div>
+                            <div>
+                                <button class="bg-[#F0A500] p-4 rounded-[16px] w-20 text-white">Edit</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-row place-content-between">
+                        <h1>Role</h1>
+                        <div>
+                            <h1>It thecnicien</h1>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-row place-content-between">
+                        <h1>Email</h1>
+                        <div>
+                            <h1>houssam@gmail.com</h1>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-row place-content-between">
+                        <h1>Phone</h1>
+                        <div>
+                            <h1>+21254687924</h1>
+                        </div>
+                    </div>
+                    <div>
+                        <h1>Experiences</h1>
+                        <div class="experiences">
+
+                        </div>
+                    </div>
+                    <div>
+                        <h1>Title</h1>
+                        <div>
+
+                        </div>
+                    </div>
+                    <div>
+                        <h1>Company</h1>
+                        <div>
+
+                        </div>
+                    </div>
+                    <h1>Description</h1>
+                    <div>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
