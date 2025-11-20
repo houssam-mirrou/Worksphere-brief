@@ -5,6 +5,28 @@ const ajouter_worker = document.querySelector(".ajouter-worker");
 const workers_holder = document.querySelector(".workers-holder");
 
 
+//plan grids
+
+//desktop
+const conference_desktop = document.querySelector(".conference-desktop");
+const reception_desktop = document.querySelector(".reception-desktop");
+const server_desktop = document.querySelector(".server-desktop");
+const break_room_desktop = document.querySelector(".break-room-desktop");
+const archive_desktop = document.querySelector(".archive-desktop");
+const security_desktop = document.querySelector(".security-desktop");
+
+//phone
+const reception_phone = document.querySelector(".reception-phone");
+const conference_phone = document.querySelector(".conference-phone");
+const break_room_phone = document.querySelector(".break-room-phone");
+const server_phone = document.querySelector(".server-phone");
+const archive_phone = document.querySelector(".archive-phone");
+const security_phone = document.querySelector(".security-phone");
+
+
+//declaration des array qui contient les worker
+let workers_array = [];
+
 
 //worker informations
 const first_name = document.querySelector("#first-name");
@@ -19,14 +41,6 @@ const experiences_container = document.querySelector(".experiences-container");
 const cancel_btn = document.querySelector(".cancel-btn");
 const add_btn = document.querySelector(".add-btn");
 
-//declaration des array qui contient les worker
-let workers_array = [];
-let it_guys = [];
-let conf_guys = [];
-let recept_guys = [];
-let server_guys = [];
-let achive_guys = [];
-let break_room_guys = [];
 
 
 //les fonction pour la verification des champ
@@ -184,7 +198,7 @@ function verifier_worker(worker) {
 
 //fonction ceerer card_ worker
 
-function creer_card_worker(worker) {
+function creer_card_worker_container(worker) {
     const worker_div = document.createElement("div");
     worker_div.classList.add("flex", "flex-row", "gap-2", "bg-[#B9B8B4]", "rounded-[16px]", "items-center", "p-5", "relative");
     console.log(worker.img);
@@ -289,8 +303,8 @@ add_btn.addEventListener("click", () => {
         mail: email.value,
         phone_number: phone.value,
         experiences: experiences,
+        assigned: 0
     };
-
 
 
 
@@ -298,13 +312,17 @@ add_btn.addEventListener("click", () => {
         return;
     }
     else {
-        const worker_div = creer_card_worker(worker);
+        const worker_div = creer_card_worker_container(worker);
         workers_holder.appendChild(worker_div);
         form_container.classList.toggle("hidden");
         empty_fields();
     }
     console.log(worker);
-
+    workers_array.push(worker);
+    console.log(workers_array);
+    reset_salles();
+    reset_fields_containers();
+    add_workers_to_fields();
 })
 
 add_experience.addEventListener("click", () => {
@@ -354,3 +372,286 @@ add_experience.addEventListener("click", () => {
     experiences_container.appendChild(exp_block);
 })
 
+
+
+function create_plus_item() {
+    const item_div = document.createElement("div");
+    item_div.classList.add("flex", "items-center", "w-full", "justify-center");
+    const plus_div = document.createElement("div");
+    plus_div.classList.add("plus", "rounded-xl", "bg-[#4A90E2]", "p-3", "text-white");
+    const plus_icon = document.createElement("i");
+    plus_icon.classList.add("fa-solid", "fa-plus");
+    plus_div.appendChild(plus_icon);
+    item_div.appendChild(plus_div);
+    return item_div;
+}
+
+function create_user_on_room(worker, phone_container, desktop_container) {
+
+    const worker_div_phone = document.createElement("div");
+    worker_div_phone.className = "bg-[#FAF8F3] flex flex-col relative items-center justify-center rounded-3xl text-center";
+
+    const img_p = document.createElement("img");
+    img_p.src = worker.img;
+    img_p.className = "w-10 h-10 rounded-full";
+
+    const name_p = document.createElement("h1");
+    name_p.textContent = worker.first_name + " " + worker.last_name;
+
+    const del_p = document.createElement("i");
+    del_p.className = "fa-solid fa-circle-minus text-red-500 absolute top-2 right-2";
+
+
+    const worker_div_desktop = document.createElement("div");
+    worker_div_desktop.className = "bg-[#FAF8F3] flex flex-col relative items-center justify-center rounded-3xl text-center";
+
+    const img_d = document.createElement("img");
+    img_d.src = worker.img;
+    img_d.className = "w-10 h-10 rounded-full";
+
+    const name_d = document.createElement("h1");
+    name_d.textContent = worker.first_name + " " + worker.last_name;
+
+    const del_d = document.createElement("i");
+    del_d.className = "fa-solid fa-circle-minus text-red-500 absolute top-2 right-2";
+
+
+    del_p.addEventListener("click", () => {
+        phone_container.removeChild(worker_div_phone);
+        desktop_container.removeChild(worker_div_desktop);
+        worker.assigned = 0;
+        filter_workers(workers_array);
+    });
+
+    del_d.addEventListener("click", () => {
+        phone_container.removeChild(worker_div_phone);
+        desktop_container.removeChild(worker_div_desktop);
+        worker.assigned = 0;
+        filter_workers(workers_array);
+    });
+
+
+    // Build DOM
+    worker_div_phone.append(img_p, name_p, del_p);
+    worker_div_desktop.append(img_d, name_d, del_d);
+
+    phone_container.appendChild(worker_div_phone);
+    desktop_container.appendChild(worker_div_desktop);
+}
+
+
+
+
+/*
+    first_name: first_name.value,
+        last_name: last_name.value,
+        role: role.value,
+        img: image.value,
+        mail: email.value,
+        phone_number: phone.value,
+        experiences: experiences,
+*/
+
+
+//fonction ceerer card_ worker
+
+function creer_card_worker(worker) {
+    const worker_div = document.createElement("div");
+    worker_div.classList.add("flex", "flex-row", "gap-2", "bg-[#B9B8B4]", "rounded-[16px]", "items-center", "p-5", "relative");
+    console.log(worker.img);
+    const image = document.createElement("img");
+    image.src = worker.img;
+    image.classList.add("rounded-full", "w-[50px]", "h-[50px]", "crop", "object-cover",
+        "object-center");
+
+    const name_role_div = document.createElement("div");
+    name_role_div.classList.add("flex", "flex-col", "gap-2");
+
+    const fullname = document.createElement("h1");
+    fullname.textContent = worker.first_name + " " + worker.last_name;
+    const worker_role = document.createElement("h1");
+    worker_role.textContent = worker.role;
+
+    name_role_div.appendChild(fullname);
+    name_role_div.appendChild(worker_role);
+
+    const right_div = document.createElement("div");
+    right_div.classList.add("flex", "flex-row", "place-content-between", "items-center", "w-full");
+
+
+    right_div.appendChild(fullname);
+    right_div.appendChild(name_role_div);
+    worker_div.appendChild(image);
+    worker_div.appendChild(right_div);
+    return worker_div;
+}
+
+const add_workers_container = document.querySelector(".add-workers-container");
+add_workers_container.addEventListener("click", (event) => {
+    event.stopPropagation();
+})
+
+const workers_container = document.querySelector(".workers-container");
+workers_container.addEventListener("click", () => {
+    workers_container.classList.toggle("hidden");
+})
+
+function create_plus_item_container(workers, container, desktop_container) {
+    const plus_div = create_plus_item();
+    const item_plus = plus_div.querySelector(".plus");
+
+    const plus_div_desktop = create_plus_item();
+    const item_plus_desktop = plus_div_desktop.querySelector(".plus");
+
+    function openMenu() {
+        
+        while (add_workers_container.firstChild) {
+            add_workers_container.removeChild(add_workers_container.firstChild);
+        }
+        reset_salles();
+        filter_workers(workers_array);
+        workers_container.classList.toggle("hidden");
+
+        let roomWorkers = [];
+
+        if (container === conference_phone) roomWorkers = salle_conference;
+        else if (container === reception_phone) roomWorkers = salle_reception;
+        else if (container === break_room_phone) roomWorkers = salle_personelle;
+        else if (container === server_phone) roomWorkers = salle_serveur;
+        else if (container === archive_phone) roomWorkers = salle_archive;
+        else if (container === security_phone) roomWorkers = salle_securite;
+
+        for (let worker of roomWorkers) {
+            const temp_worker = creer_card_worker(worker);
+            add_workers_container.appendChild(temp_worker);
+
+            temp_worker.addEventListener("click", () => {
+                worker.assigned = 1;
+                console.log(worker);
+                const plusElement = container.querySelector(".plus");
+                const plusElement_desktop = desktop_container.querySelector(".plus");
+
+                if (plusElement) {
+                    plusElement.parentNode.remove();
+                } 
+                if (plusElement_desktop) {
+                    plusElement_desktop.parentNode.remove();
+                }
+                create_user_on_room(worker, container, desktop_container);
+
+                create_plus_item_container(workers, container, desktop_container);
+                filter_workers(workers_array);
+                workers_container.classList.toggle("hidden");
+            });
+        }
+    }
+
+    item_plus.addEventListener("click", openMenu);
+    item_plus_desktop.addEventListener("click", openMenu);
+
+    container.appendChild(plus_div);
+    desktop_container.appendChild(plus_div_desktop);
+}
+
+
+
+//les arrays de tout les 
+let it_guys = [];
+let conf_guys = [];
+let recept_guys = [];
+let server_guys = [];
+let achive_guys = [];
+let break_guys = [];
+let security_guys = [];
+let managers_guys = [];
+let cleaning_guys = [];
+let others_gays = [];
+
+let salle_conference = [];
+let salle_reception = [];
+let salle_serveur = [];
+let salle_securite = [];
+let salle_personelle = [];
+let salle_archive = [];
+
+let current_salle_conference = [];
+let current_salle_reception = [];
+let current_salle_serveur = [];
+let current_salle_securite = [];
+let current_salle_personelle = [];
+let current_salle_archive = [];
+
+
+function filter_workers(workers_array) {
+    for (let worker of workers_array) {
+        if (worker.assigned === 0) {
+            if (worker.role === "Receptionist") {
+                salle_reception.push(worker);
+                salle_conference.push(worker);
+                salle_personelle.push(worker);
+                salle_archive.push(worker);
+            }
+            if (worker.role === "IT Technician") {
+                it_guys.push(worker);
+                salle_conference.push(worker);
+                salle_serveur.push(worker);
+                salle_personelle.push(worker);
+                salle_archive.push(worker);
+            }
+            if (worker.role === "Security Agent") {
+                salle_conference.push(worker);
+                salle_securite.push(worker);
+                salle_personelle.push(worker);
+                salle_archive.push(worker);
+            }
+            if (worker.role === "Manager") {
+                salle_reception.push(worker);
+                salle_conference.push(worker);
+                salle_serveur.push(worker);
+                salle_securite.push(worker);
+                salle_personelle.push(worker);
+                salle_archive.push(worker);
+
+            }
+            if (worker.role === "Cleaning") {
+                salle_conference.push(worker);
+                salle_personelle.push(worker);
+            }
+            if (worker.role === "Other") {
+                salle_conference.push(worker);
+                salle_personelle.push(worker);
+            }
+        }
+
+    }
+}
+
+function reset_salles() {
+    salle_conference = [];
+    salle_reception = [];
+    salle_serveur = [];
+    salle_securite = [];
+    salle_personelle = [];
+    salle_archive = [];
+}
+
+function reset_fields_containers() {
+    conference_phone.innerHTML = "";
+    reception_phone.innerHTML = "";
+    break_room_phone.innerHTML = "";
+    server_phone.innerHTML = "";
+    archive_phone.innerHTML = "";
+    security_phone.innerHTML = "";
+}
+
+
+
+function add_workers_to_fields() {
+    filter_workers(workers_array);
+    create_plus_item_container(salle_conference, conference_phone, conference_desktop);
+    create_plus_item_container(salle_reception, reception_phone, reception_desktop);
+    create_plus_item_container(salle_personelle, break_room_phone, break_room_desktop);
+    create_plus_item_container(salle_serveur, server_phone, server_desktop);
+    create_plus_item_container(salle_archive, archive_phone, archive_desktop);
+    create_plus_item_container(salle_securite, security_phone, security_desktop);
+}
