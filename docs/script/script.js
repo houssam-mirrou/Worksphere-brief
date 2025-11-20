@@ -421,6 +421,15 @@ function create_user_on_room(worker, phone_container, desktop_container) {
         desktop_container.removeChild(worker_div_desktop);
         worker.assigned = 0;
         filter_workers(workers_array);
+        while (workers_holder.firstChild) {
+            workers_holder.removeChild(workers_holder.firstChild);
+        }
+        for (let worker of workers_array) {
+            if (worker.assigned === 0) {
+                const temp_worker = creer_card_worker_container(worker);
+                workers_holder.appendChild(temp_worker);
+            }
+        }
     });
 
     del_d.addEventListener("click", () => {
@@ -428,6 +437,15 @@ function create_user_on_room(worker, phone_container, desktop_container) {
         desktop_container.removeChild(worker_div_desktop);
         worker.assigned = 0;
         filter_workers(workers_array);
+        while (workers_holder.firstChild) {
+            workers_holder.removeChild(workers_holder.firstChild);
+        }
+        for (let worker of workers_array) {
+            if (worker.assigned === 0) {
+                const temp_worker = creer_card_worker_container(worker);
+                workers_holder.appendChild(temp_worker);
+            }
+        }
     });
 
 
@@ -497,6 +515,13 @@ workers_container.addEventListener("click", () => {
 })
 
 function create_plus_item_container(workers, container, desktop_container) {
+    const old_plus = container.querySelector(".plus");
+    if (old_plus) old_plus.parentNode.remove();
+
+    const old_plus_desktop = desktop_container.querySelector(".plus");
+    if (old_plus_desktop) old_plus_desktop.parentNode.remove();
+
+
     const plus_div = create_plus_item();
     const item_plus = plus_div.querySelector(".plus");
 
@@ -504,7 +529,7 @@ function create_plus_item_container(workers, container, desktop_container) {
     const item_plus_desktop = plus_div_desktop.querySelector(".plus");
 
     function openMenu() {
-        
+
         while (add_workers_container.firstChild) {
             add_workers_container.removeChild(add_workers_container.firstChild);
         }
@@ -533,15 +558,23 @@ function create_plus_item_container(workers, container, desktop_container) {
 
                 if (plusElement) {
                     plusElement.parentNode.remove();
-                } 
+                }
                 if (plusElement_desktop) {
                     plusElement_desktop.parentNode.remove();
                 }
                 create_user_on_room(worker, container, desktop_container);
-
                 create_plus_item_container(workers, container, desktop_container);
                 filter_workers(workers_array);
                 workers_container.classList.toggle("hidden");
+                while (workers_holder.firstChild) {
+                    workers_holder.removeChild(workers_holder.firstChild);
+                }
+                for (let worker of workers) {
+                    if (worker.assigned === 0) {
+                        const temp_worker = creer_card_worker_container(worker);
+                        workers_holder.appendChild(temp_worker);
+                    }
+                }
             });
         }
     }
