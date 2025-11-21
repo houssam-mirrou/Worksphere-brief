@@ -43,14 +43,14 @@ Chaque zone permet :
  ----------------------------------------------------------
 ## 🔒 Restrictions d’accès par rôle
 
-| Rôle               | Accès autorisé                                                                            | Accès interdit |
-|--------------------|-------------------------------------------------------------------------------------------|----------------|
-| **Réceptionniste** | Réception, Salle du personnel, Salle de conférence, Archives                              | Salle des serveurs, Salle de sécurité |
-| **Technicien IT**  | Salle des serveurs, Salle du personnel, Salle de conférence, Archives                     | Réception, Salle de sécurité          |
-| **Agent de sécurité** | Salle de sécurité, Salle du personnel, Salle de conférence, Archives                   | Réception, Salle des serveurs         |
-| **Manager**        | **Toutes les zones sans exception**                                                       | —                                     |
-| **Nettoyage**      | Salle du personnel, Salle de conférence, Réception, Salle des serveurs, Salle de sécurité | **Salle d’archives**                  |
-| **Autres rôles**   | Zones générales (Salle du personnel, Salle de conférence, Archives\*) | Zones restreintes (Réception, Serveurs, Sécurité)         |
+| Rôle                  | Accès autorisé                                                                            | Accès interdit                        |
+|-----------------------|-------------------------------------------------------------------------------------------|---------------------------------------|
+| **Réceptionniste**    | Réception, Salle du personnel, Salle de conférence, Archives                              | Salle des serveurs, Salle de sécurité |
+| **Technicien IT**     | Salle des serveurs, Salle du personnel, Salle de conférence, Archives                     | Réception, Salle de sécurité          |
+| **Agent de sécurité** | Salle de sécurité, Salle du personnel, Salle de conférence, Archives                      | Réception, Salle des serveurs         |
+| **Manager**           | **Toutes les zones sans exception**                                                       | —                                     |
+| **Nettoyage**         | Salle du personnel, Salle de conférence, Réception, Salle des serveurs, Salle de sécurité | **Salle d’archives**                  |
+| **Autres rôles**      | Zones générales (Salle du personnel, Salle de conférence, Archives\*) | Zones restreintes (Réception, Serveurs, Sécurité)         |
 
 
 
@@ -100,15 +100,15 @@ Basé sur :
 
 ## Structure du projet
 
-├── index.html # Structure HTML du projet
-├── css/
-│ └── style.css # Styles + Tailwind CSS
-├── script/
-│ └── script.js # Logique complète de l'application
-├── img/
-│ ├── phone.png
-│ ├── desktop.png
-│ └── profile.png # Image par défaut
+├── index.html # Structure HTML du projet  
+├── css/  
+│ └── style.css # Styles + Tailwind CSS  
+├── script/  
+│ └── script.js # Logique complète de l'application  
+├── img/  
+│ ├── phone.png  
+│ ├── desktop.png  
+│ └── profile.png # Image par défaut  
 
 
 ###  Références utilisées dans ce dépôt
