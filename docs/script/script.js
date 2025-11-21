@@ -883,3 +883,59 @@ let personelle_cpt = 0;
 let reception_cpt = 0;
 let securite_cpt = 0;
 let serveur_cpt = 0;
+
+const search_role_person = document.querySelector(".search-role-person");
+
+search_role_person.addEventListener("input", (event) => {
+    while (workers_holder.firstChild) {
+        workers_holder.removeChild(workers_holder.firstChild);
+    }
+    if (event.target.value === "") {
+        for (let worker of workers_array) {
+            if (worker.assigned === 0) {
+                const worker_card = creer_card_worker_container(worker);
+                worker_card.addEventListener("click", () => {
+                    show_worker_details(worker);
+                });
+                workers_holder.appendChild(worker_card);
+            }
+        }
+        return;
+    }
+    let temp_filter = [];
+    let roles = ["Receptionist", "IT Technician", "Security Agent", "Manager", "Cleaning", "Other"];
+    let value = event.target.value;
+    for (let worker of workers_array) {
+        if (worker.first_name.toLowerCase().includes(value) || worker.last_name.toLowerCase().includes(value)) {
+            temp_filter.push(worker);
+        }
+        if (worker.role.toLowerCase().includes(event.target.value)) {
+            if (exist_in_array(temp_filter,worker)===false) {
+                temp_filter.push(worker);
+            }
+        }
+    }
+
+
+    if (temp_filter.length === 0) {
+        workers_holder.textContent = "There's no on by name or role";
+    }
+    else {
+        for (let worker of temp_filter) {
+            const worker_card = creer_card_worker_container(worker);
+            worker_card.addEventListener("click", () => {
+                show_worker_details(worker);
+            });
+            workers_holder.appendChild(worker_card);
+        }
+    }
+})
+
+function exist_in_array(temp_filter,worker){
+    for(let wor of temp_filter){
+        if(wor === worker){
+            return true;
+        }
+    }
+    return false;
+}
