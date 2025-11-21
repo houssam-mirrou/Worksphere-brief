@@ -42,6 +42,31 @@ const cancel_btn = document.querySelector(".cancel-btn");
 const add_btn = document.querySelector(".add-btn");
 
 
+//les arrays de tout les 
+let it_guys = [];
+let conf_guys = [];
+let recept_guys = [];
+let server_guys = [];
+let achive_guys = [];
+let break_guys = [];
+let security_guys = [];
+let managers_guys = [];
+let cleaning_guys = [];
+let others_gays = [];
+
+let salle_conference = [];
+let salle_reception = [];
+let salle_serveur = [];
+let salle_securite = [];
+let salle_personelle = [];
+let salle_archive = [];
+
+let current_salle_conference = [];
+let current_salle_reception = [];
+let current_salle_serveur = [];
+let current_salle_securite = [];
+let current_salle_personelle = [];
+let current_salle_archive = [];
 
 //les fonction pour la verification des champ
 function test_first_name(name) {
@@ -378,12 +403,6 @@ function show_worker_details(worker) {
             zone_pop_up.textContent = "Exists in the receptions room";
         }
     }
-    let salle_conference = [];
-    let salle_reception = [];
-    let salle_serveur = [];
-    let salle_securite = [];
-    let salle_personelle = [];
-    let salle_archive = [];
     experiences_pop_up.innerHTML = "";
     if (worker.experiences.length !== 0) {
         console.log(worker.experiences.length);
@@ -512,6 +531,8 @@ function create_plus_item() {
 
 function create_user_on_room(worker, phone_container, desktop_container) {
 
+
+
     const worker_div_phone = document.createElement("div");
     worker_div_phone.className = "bg-[#FAF8F3] flex flex-col relative items-center justify-center rounded-3xl text-center";
 
@@ -565,6 +586,14 @@ function create_user_on_room(worker, phone_container, desktop_container) {
                 workers_holder.appendChild(temp_worker);
             }
         }
+        if (phone_container === conference_phone) conf_cpt--;
+        else if (phone_container === reception_phone) reception_cpt--;
+        else if (phone_container === break_room_phone) personelle_cpt--;
+        else if (phone_container === server_phone) serveur_cpt--;
+        else if (phone_container === archive_phone) archive_cpt--;
+        else if (phone_container === security_phone) securite_cpt--;
+        create_plus_item_container(worker, phone_container, desktop_container);
+
     });
 
     del_d.addEventListener("click", (event) => {
@@ -585,6 +614,14 @@ function create_user_on_room(worker, phone_container, desktop_container) {
                 workers_holder.appendChild(temp_worker);
             }
         }
+        if (phone_container === conference_phone) conf_cpt--;
+        else if (phone_container === reception_phone) reception_cpt--;
+        else if (phone_container === break_room_phone) personelle_cpt--;
+        else if (phone_container === server_phone) serveur_cpt--;
+        else if (phone_container === archive_phone) archive_cpt--;
+        else if (phone_container === security_phone) securite_cpt--;
+        create_plus_item_container(worker, phone_container, desktop_container);
+
     });
 
 
@@ -653,7 +690,20 @@ workers_container.addEventListener("click", () => {
     workers_container.classList.toggle("hidden");
 })
 
+function pop_up_notification() {
+
+}
+
+
 function create_plus_item_container(workers, container, desktop_container) {
+    if (container === conference_phone && conf_cpt >= 6) return;
+    if (container === reception_phone && reception_cpt >= 6) return;
+    if (container === break_room_phone && personelle_cpt >= 4) return;
+    if (container === server_phone && serveur_cpt >= 4) return;
+    if (container === archive_phone && archive_cpt >= 4) return;
+    if (container === security_phone && securite_cpt >= 4) return;
+
+
     const old_plus = container.querySelector(".plus");
     if (old_plus) old_plus.parentNode.remove();
 
@@ -678,12 +728,24 @@ function create_plus_item_container(workers, container, desktop_container) {
 
         let roomWorkers = [];
 
-        if (container === conference_phone) roomWorkers = salle_conference;
-        else if (container === reception_phone) roomWorkers = salle_reception;
-        else if (container === break_room_phone) roomWorkers = salle_personelle;
-        else if (container === server_phone) roomWorkers = salle_serveur;
-        else if (container === archive_phone) roomWorkers = salle_archive;
-        else if (container === security_phone) roomWorkers = salle_securite;
+        if (container === conference_phone) {
+            roomWorkers = salle_conference;
+        }
+        else if (container === reception_phone) {
+            roomWorkers = salle_reception;
+        }
+        else if (container === break_room_phone) {
+            roomWorkers = salle_personelle;
+        }
+        else if (container === server_phone) {
+            roomWorkers = salle_serveur;
+        }
+        else if (container === archive_phone) {
+            roomWorkers = salle_archive;
+        }
+        else if (container === security_phone) {
+            roomWorkers = salle_securite;
+        }
 
         for (let worker of roomWorkers) {
             const temp_worker = creer_card_worker(worker);
@@ -692,6 +754,12 @@ function create_plus_item_container(workers, container, desktop_container) {
 
             temp_worker.addEventListener("click", () => {
                 worker.assigned = 1;
+                if (container === conference_phone) conf_cpt++;
+                else if (container === reception_phone) reception_cpt++;
+                else if (container === break_room_phone) personelle_cpt++;
+                else if (container === server_phone) serveur_cpt++;
+                else if (container === archive_phone) archive_cpt++;
+                else if (container === security_phone) securite_cpt++;
                 console.log(worker);
                 const plusElement = container.querySelector(".plus");
                 const plusElement_desktop = desktop_container.querySelector(".plus");
@@ -714,6 +782,7 @@ function create_plus_item_container(workers, container, desktop_container) {
                         const temp_worker = creer_card_worker_container(worker);
                         temp_worker.addEventListener("click", () => {
                             show_worker_details(worker);
+
                         })
                         workers_holder.appendChild(temp_worker);
                     }
@@ -731,31 +800,6 @@ function create_plus_item_container(workers, container, desktop_container) {
 
 
 
-//les arrays de tout les 
-let it_guys = [];
-let conf_guys = [];
-let recept_guys = [];
-let server_guys = [];
-let achive_guys = [];
-let break_guys = [];
-let security_guys = [];
-let managers_guys = [];
-let cleaning_guys = [];
-let others_gays = [];
-
-let salle_conference = [];
-let salle_reception = [];
-let salle_serveur = [];
-let salle_securite = [];
-let salle_personelle = [];
-let salle_archive = [];
-
-let current_salle_conference = [];
-let current_salle_reception = [];
-let current_salle_serveur = [];
-let current_salle_securite = [];
-let current_salle_personelle = [];
-let current_salle_archive = [];
 
 
 function filter_workers(workers_array) {
@@ -831,3 +875,10 @@ function add_workers_to_fields() {
     create_plus_item_container(salle_archive, archive_phone, archive_desktop);
     create_plus_item_container(salle_securite, security_phone, security_desktop);
 }
+
+let conf_cpt = 0;
+let archive_cpt = 0;
+let personelle_cpt = 0;
+let reception_cpt = 0;
+let securite_cpt = 0;
+let serveur_cpt = 0;
