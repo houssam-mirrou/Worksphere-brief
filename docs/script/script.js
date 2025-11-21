@@ -803,6 +803,7 @@ function create_plus_item_container(workers, container, desktop_container) {
 
 
 function filter_workers(workers_array) {
+    console.log(workers_array);
     for (let worker of workers_array) {
         if (worker.assigned === 0) {
             if (worker.role === "Receptionist") {
