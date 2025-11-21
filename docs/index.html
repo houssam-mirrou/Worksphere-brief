@@ -1,11 +1,215 @@
 <html>
-    <head>
-        <title>Hello</title>
-        <link rel="stylesheet" href="css/style.css">
-    </head>
-    <body>        
-        <h1 class="text-4xl font-bold">WorkSphere</h1>
 
-    </body>
+<head>
+    <title>Hello</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="script/script.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+</head>
+
+<body class="bg-[#F5F2EB]">
+    <div class="form-container hidden w-full bg-black/50 pl-52 pr-52 pt-4 pb-4 z-20 h-full fixed ">
+        <div class="flex flex-col items-center ">
+            <form
+                class="ajouter-worker bg-[#EDEDEC] p-12 text-2xl flex flex-col gap-4 rounded-[16px] overflow-y-scroll max-h-[90vh]"
+                enctype="multipart/form-data">
+                <h1 class="text-5xl font-semibold">Add new worker</h1>
+                <div class="flex flex-row place-content-between items-center">
+                    <label for="first-name">First Name</label>
+                    <input type="text" id="first-name" class="rounded-2xl p-4 bg-[#F5F2EB]" placeholder="First Name">
+                </div>
+                <div class="flex flex-row place-content-between items-center">
+                    <label for="last-name">Last Name</label>
+                    <input type="text" id="last-name" class="rounded-2xl p-4 bg-[#F5F2EB] " placeholder="Last Name">
+                </div>
+                <div class="flex flex-row place-content-between items-center">
+                    <label for="role">Role</label>
+                    <input list="roles" id="role" class="rounded-2xl p-4 bg-[#F5F2EB]" placeholder="Role">
+
+                    <datalist id="roles">
+                        <option value="Receptionist">
+                        <option value="IT Technician">
+                        <option value="Security Agent">
+                        <option value="Manager">
+                        <option value="Cleaning">
+                        <option value="Other">
+                    </datalist>
+                </div>
+                <div class="flex felx-row items-center place-content-between">
+                    <div class="w-20 h-20 rounded-full bg-[#D9D9D9]">
+                    </div>
+                    <input type="url" id="image" class="rounded-2xl p-4 bg-[#F5F2EB]" placeholder="Image URL">
+                </div>
+                <div class="flex flex-row place-content-between items-center">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" class="rounded-2xl p-4 bg-[#F5F2EB]" placeholder="Your Email">
+                </div>
+                <div class="flex flex-row place-content-between items-center">
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" class="rounded-2xl p-4 bg-[#F5F2EB]" placeholder="Your Phone Number">
+                </div>
+                <div class="flex flex-col gap-5">
+                    <div class="flex flex-row items-center">
+                        <div class="flex flex-row place-content-between w-full">
+                            Add Experience
+                            <i class="fa-solid fa-plus add-experience"></i>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-5 experiences-container">
+
+                    </div>
+
+                </div>
+                <div class="flex flex-row place-content-between items-center gap-2">
+                    <button type="button"
+                        class="cancel-btn bg-[#D64545] w-2/5 rounded-[16px] p-5 text-white">Cancel</button>
+                    <button type="button" class="add-btn bg-[#3BB273] w-2/5 rounded-[16px] p-5 text-white">Add</button>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+    <div class="workers-container hidden w-full bg-black/50 pl-52 pr-52 pt-4 pb-4 z-20 h-full fixed">
+        <div class="flex flex-col items-center ">
+            <div class="add-workers-container bg-[#EDEDEC] p-12 text-2xl flex flex-col gap-4 rounded-[16px]">
+
+            </div>
+        </div>
+    </div>
+    <div
+        class="hidden flex flex-col w-full bg-black/50 pl-52 pr-52 pt-4 pb-4 z-20 h-full fixed items-center justify-center worker-information">
+        <div
+            class="bg-[#EDEDEC] p-12 text-2xl flex flex-col gap-4 rounded-[16px] w-[680px] worker-information-container ">
+            <div class="flex flex-row gap-4">
+                <div class="w-20 h-20 rounded-full bg-[#D9D9D9]">
+                    <img src="" alt="" class="worker-img">
+                </div>
+                <div class="flex flex-row w-10/12 place-content-between items-center">
+                    <div>
+                        <h1 class="first-name">First Name</h1>
+                        <h2 class="last-name">Last Name</h2>
+                    </div>
+                    <div>
+                        <button class="bg-[#F0A500] p-4 rounded-[16px] w-20 text-white">Edit</button>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-row place-content-between">
+                <h1>Role</h1>
+                <div>
+                    <h1 class="role">It thecnicien</h1>
+                </div>
+            </div>
+            <div class="flex flex-row place-content-between">
+                <h1>Current zone</h1>
+                <div>
+                    <h1 class="zone">It thecnicien</h1>
+                </div>
+            </div>
+
+            <div class="flex flex-row place-content-between">
+                <h1>Email</h1>
+                <div>
+                    <h1 class="email">houssam@gmail.com</h1>
+                </div>
+            </div>
+
+            <div class="flex flex-row place-content-between">
+                <h1>Phone</h1>
+                <div>
+                    <h1 class="phone-number">+21254687924</h1>
+                </div>
+            </div>
+            <div>
+                <div class="experiences">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <main class="p-8 bg-[#F5F2EB]">
+        <div class="flex flex-col gap-5 h-full">
+            <div
+                class="bg-[#FAF8F3] rounded-[16px] place-content-between flex flex-col md:flex-row gap-7 side-image-container h-full">
+                <div class="flex flex-col bg-[#EDEDEC] p-8 rounded-[16px] gap-4 md:w-1/4">
+                    <h1 class="text-4xl font-bold">WorkSphere</h1>
+                    <h2 class="text-3xl">Unassigend Staff</h2>
+                    <div class="flex relative text-xl">
+                        <input type="text" placeholder="Search" class="bg-[#F5F2EB] rounded-3xl p-4 w-full search-role-person">
+                        <i class="fa-solid fa-magnifying-glass right-5 top-5 absolute"></i>
+                    </div>
+                    <div class="workers-holder flex flex-col gap-3 md:h-5/6 md:overflow-y-auto">
+
+                    </div>
+                    <div class="flex justify-center">
+                        <button class="bg-[#3BB273] w-60 h-14 text-white rounded-[16px] font-bold text-xl"
+                            id="add-worker">Add New
+                            Worker</button>
+                    </div>
+                </div>
+                <div class="flex items-center justify-center">
+                    <div class="flex relative phone-plan lg:hidden z-10">
+                        <img src="img/phone.png" class="rounded-[16px] w-full " alt="">
+                        <div
+                            class="absolute inset-0 grid grid-cols-[repeat(32,minmax(0,1fr))] grid-rows-[repeat(64,minmax(0,1fr))] ">
+                            <div
+                                class="border border-red-500 col-start-[3] col-end-[19] row-start-4 row-end-[19] reception-phone grid grid-cols-3 grid-rows-2 place-content-center items-center gap-2">
+
+                            </div>
+                            <div
+                                class="border border-red-500 col-start-[19] col-end-[31] row-start-4 row-end-[19] conference-phone grid grid-cols-3 grid-rows-2 place-content-center items-center gap-2">
+                            </div>
+                            <div
+                                class="border border-red-500 col-start-[3] col-end-[14] row-start-[34] row-end-[48] break-room-phone grid grid-cols-2 grid-rows-2 place-content-center items-center gap-2">
+                            </div>
+                            <div
+                                class="border border-red-500 col-start-[19] col-end-[31] row-start-[34] row-end-[48] server-phone grid grid-cols-2 grid-rows-2 place-content-center items-center gap-2">
+                            </div>
+                            <div
+                                class="border border-red-500 col-start-[3] col-end-[14] row-start-[48] row-end-[61] archive-phone grid grid-cols-2 grid-rows-2 place-content-center items-center gap-2">
+                            </div>
+                            <div
+                                class="border border-red-500 col-start-[19] col-end-[31] row-start-[48] row-end-[61] security-phone grid grid-cols-2 grid-rows-2 place-content-center items-center gap-2">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="items-center justify-center hidden lg:flex">
+                    <div class="flex relative desktop-plan w-3/4 z-10">
+                        <img src="img/desktop.png" alt="" class="rounded-[16px] w-full">
+                        <div
+                            class="absolute inset-0 grid grid-cols-[repeat(62,minmax(0,1fr))] grid-rows-[repeat(62,minmax(0,1fr))] ">
+                            <div
+                                class="border border-red-500 col-start-[3] col-end-[24] row-start-4 row-end-[25] conference-desktop grid grid-cols-3 grid-rows-2 gap-2 p-4">
+
+                            </div>
+                            <div
+                                class="border border-red-500 col-start-[3] col-end-[24] row-start-[25] row-end-[60] reception-desktop grid grid-cols-3 grid-rows-2 gap-2 p-4">
+                            </div>
+                            <div
+                                class="border border-red-500 col-start-[37] col-end-[49] row-start-[4] row-end-[27] server-desktop grid grid-cols-2 grid-rows-2 gap-2 p-4">
+                            </div>
+                            <div
+                                class="border border-red-500 col-start-[37] col-end-[49] row-start-[37] row-end-[60] break-room-desktop grid grid-cols-2 grid-rows-2 gap-2 p-4">
+                            </div>
+                            <div
+                                class="border border-red-500 col-start-[49] col-end-[61] row-start-[37] row-end-[60] archive-desktop grid grid-cols-2 grid-rows-2 gap-2 p-4">
+                            </div>
+                            <div
+                                class="border border-red-500 col-start-[49] col-end-[61] row-start-[4] row-end-[27] security-desktop grid grid-cols-2 grid-rows-2 gap-2 p-4">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </main>
+
+</body>
 
 </html>
