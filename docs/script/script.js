@@ -275,6 +275,125 @@ function empty_fields() {
     }
 }
 
+
+const worker_information = document.querySelector(".worker-information");
+const first_name_worker_pop_up = document.querySelector(".first-name");
+const last_name_worker_pop_up = document.querySelector(".last-name");
+const role_worker_pop_up = document.querySelector(".role");
+const email_worker_pop_up = document.querySelector(".email");
+const phone_number_pop_up = document.querySelector(".phone-number");
+const experiences_pop_up = document.querySelector(".experiences");
+const zone_pop_up = document.querySelector(".zone");
+
+worker_information.addEventListener("click", () => {
+    worker_information.classList.toggle("hidden");
+})
+const worker_information_container = document.querySelector(".worker-information-container");
+worker_information_container.addEventListener("click", (event) => {
+    event.stopPropagation();
+})
+
+function create_experience_div(experience) {
+    const exp_div = document.createElement("div");
+
+    const experience_name = document.createElement("h1");
+    experience_name.textContent = "Experience";
+
+    const experience_title_header = document.createElement("h1");
+    experience_title_header.textContent = "Title";
+
+    const experience_title = document.createElement("h1");
+    experience_title.textContent = experience.title;
+
+    const experience_company_title = document.createElement("h1");
+    experience_company_title.textContent = "Company";
+
+    const experience_company = document.createElement("h1");
+    experience_company.textContent = experience.company;
+
+    const experience_start_title = document.createElement("h1");
+    experience_start_title.textContent = "Start Date";
+
+    const experience_start = document.createElement("h1");
+    experience_start.textContent = experience.start;
+
+    const experience_end_title = document.createElement("h1");
+    experience_end_title.textContent = "End Date";
+
+    const experience_end = document.createElement("h1");
+    experience_end.textContent = experience.end;
+
+    const experience_descrip = document.createElement("h1");
+    experience_descrip.textContent = "Description";
+
+    const experience_desc = document.createElement("h1");
+    experience_desc.textContent = experience.desc;
+
+    exp_div.appendChild(experience_name);
+    exp_div.appendChild(experience_title_header);
+    exp_div.appendChild(experience_title);
+    exp_div.appendChild(experience_company_title);
+    exp_div.appendChild(experience_company);
+    exp_div.appendChild(experience_start_title);
+    exp_div.appendChild(experience_start);
+    exp_div.appendChild(experience_end_title);
+    exp_div.appendChild(experience_end);
+    exp_div.appendChild(experience_descrip);
+    exp_div.appendChild(experience_desc);
+
+    return exp_div;
+}
+
+function show_worker_details(worker) {
+    worker_information.classList.toggle("hidden");
+    first_name_worker_pop_up.textContent = worker.first_name;
+    last_name_worker_pop_up.textContent = worker.last_name;
+    role_worker_pop_up.textContent = worker.role;
+    email_worker_pop_up.textContent = worker.mail;
+    phone_number_pop_up.textContent = worker.phone_number;
+    console.log(zone_pop_up);
+    if (worker.assigned === 0) {
+        zone_pop_up.textContent = "Unassigned";
+    }
+    else {
+        if (salle_conference.includes(worker)) {
+            zone_pop_up.textContent = "Exists in conference room";
+        }
+        if (salle_archive.includes(worker)) {
+            zone_pop_up.textContent = "Exists in archive room";
+        }
+        if (salle_serveur.includes(worker)) {
+            zone_pop_up.textContent = "Exists in the server room";
+        }
+
+        if (salle_personelle.includes(worker)) {
+            zone_pop_up.textContent = "Exists in the break room";
+        }
+
+        if (salle_securite.includes(worker)) {
+            zone_pop_up.textContent = "Exists in the security room";
+        }
+
+        if (salle_reception.includes(worker)) {
+            zone_pop_up.textContent = "Exists in the receptions room";
+        }
+    }
+    let salle_conference = [];
+    let salle_reception = [];
+    let salle_serveur = [];
+    let salle_securite = [];
+    let salle_personelle = [];
+    let salle_archive = [];
+    experiences_pop_up.innerHTML = "";
+    if (worker.experiences.length !== 0) {
+        console.log(worker.experiences.length);
+        for (let exp of worker.experiences) {
+            const experience_div = create_experience_div(exp);
+            experiences_pop_up.appendChild(experience_div);
+        }
+    }
+}
+
 add_btn.addEventListener("click", () => {
     const experiences_blocks = document.querySelectorAll(".exp-block");
 
@@ -313,7 +432,13 @@ add_btn.addEventListener("click", () => {
     }
     else {
         const worker_div = creer_card_worker_container(worker);
+
+
+        worker_div.addEventListener("click", () => {
+            show_worker_details(worker);
+        });
         workers_holder.appendChild(worker_div);
+
         form_container.classList.toggle("hidden");
         empty_fields();
     }
@@ -321,7 +446,6 @@ add_btn.addEventListener("click", () => {
     workers_array.push(worker);
     console.log(workers_array);
     reset_salles();
-    reset_fields_containers();
     add_workers_to_fields();
 })
 
@@ -415,8 +539,16 @@ function create_user_on_room(worker, phone_container, desktop_container) {
     const del_d = document.createElement("i");
     del_d.className = "fa-solid fa-circle-minus text-red-500 absolute top-2 right-2";
 
+    worker_div_desktop.addEventListener("click", () => {
+        show_worker_details(worker);
+    })
 
-    del_p.addEventListener("click", () => {
+    worker_div_phone.addEventListener("click", () => {
+        show_worker_details(worker);
+    })
+
+    del_p.addEventListener("click", (event) => {
+        event.stopPropagation();
         phone_container.removeChild(worker_div_phone);
         desktop_container.removeChild(worker_div_desktop);
         worker.assigned = 0;
@@ -427,12 +559,16 @@ function create_user_on_room(worker, phone_container, desktop_container) {
         for (let worker of workers_array) {
             if (worker.assigned === 0) {
                 const temp_worker = creer_card_worker_container(worker);
+                temp_worker.addEventListener("click", () => {
+                    show_worker_details(worker);
+                })
                 workers_holder.appendChild(temp_worker);
             }
         }
     });
 
-    del_d.addEventListener("click", () => {
+    del_d.addEventListener("click", (event) => {
+        event.stopPropagation();
         phone_container.removeChild(worker_div_phone);
         desktop_container.removeChild(worker_div_desktop);
         worker.assigned = 0;
@@ -443,6 +579,9 @@ function create_user_on_room(worker, phone_container, desktop_container) {
         for (let worker of workers_array) {
             if (worker.assigned === 0) {
                 const temp_worker = creer_card_worker_container(worker);
+                temp_worker.addEventListener("click", () => {
+                    show_worker_details(worker);
+                })
                 workers_holder.appendChild(temp_worker);
             }
         }
@@ -550,6 +689,7 @@ function create_plus_item_container(workers, container, desktop_container) {
             const temp_worker = creer_card_worker(worker);
             add_workers_container.appendChild(temp_worker);
 
+
             temp_worker.addEventListener("click", () => {
                 worker.assigned = 1;
                 console.log(worker);
@@ -569,9 +709,12 @@ function create_plus_item_container(workers, container, desktop_container) {
                 while (workers_holder.firstChild) {
                     workers_holder.removeChild(workers_holder.firstChild);
                 }
-                for (let worker of workers) {
+                for (let worker of workers_array) {
                     if (worker.assigned === 0) {
                         const temp_worker = creer_card_worker_container(worker);
+                        temp_worker.addEventListener("click", () => {
+                            show_worker_details(worker);
+                        })
                         workers_holder.appendChild(temp_worker);
                     }
                 }
