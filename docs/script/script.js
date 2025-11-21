@@ -182,7 +182,7 @@ function verifier_worker(worker) {
 
         worker.experiences.forEach((exp, i) => {
 
-            const block = blocks[i]; 
+            const block = blocks[i];
 
             if (test_exp_title(exp.title) === false) {
                 block.querySelector(".exp-title").focus();
@@ -209,6 +209,107 @@ function verifier_worker(worker) {
     return true;
 }
 
+const edit_container = document.querySelector(".edit-container");
+const edit_worker = document.querySelector(".edit-worker");
+const edit_first_name = document.querySelector("#edit-first-name");
+const edit_last_name = document.querySelector("#edit-last-name");
+const edit_role = document.querySelector("#edit-role");
+const edit_image_url = document.querySelector(".edit-image-url");
+const edit_email = document.querySelector("#edit-email");
+const edit_phone = document.querySelector("#edit-phone");
+const edit_experiences = document.querySelector(".edit-experiences");
+const edit_cancel_btn = document.querySelector(".edit-cancel-btn");
+const edit_btn = document.querySelector(".edit-btn");
+
+function edit_worker_function(worker) {
+    edit_container.classList.remove("hidden");
+    edit_container.addEventListener("click", () => {
+        edit_container.classList.add("hidden");
+    });
+    edit_worker.addEventListener("click", (event) => {
+        event.stopPropagation();
+    });
+
+    edit_first_name.value = worker.first_name;
+    edit_last_name.value = worker.last_name;
+    edit_role.value = worker.role;
+    edit_image_url.value = worker.img;
+    edit_email.value = worker.mail;
+    edit_phone.value = worker.phone_number;
+    edit_experiences.innerHTML = "";
+    worker.experiences.forEach(exp => {
+        const div = document.createElement("div");
+        div.classList.add("flex", "flex-col", "gap-2");
+        div.innerHTML = `
+            <h1>Experiences</h1>
+            <div class="flex flex-col gap-4 edit-exp-block">
+                <div class="flex flex-row place-content-between">
+                    <label for="edit-exp-title">Job Title</label>
+                    <input type="text" id="edit-exp-title" class="rounded-2xl p-4 bg-[#F5F2EB]" value="${exp.title}">
+                </div>
+                <div class="flex flex-row place-content-between">
+                    <label for="edit-exp-company">Company</label>
+                    <input type="text" id="edit-exp-company" class="rounded-2xl p-4 bg-[#F5F2EB]" value="${exp.company}">
+                </div>
+                <div class="flex flex-row place-content-between">
+                    <label for="edit-exp-duration-start">Start</label>
+                    <input type="date" id="edit-exp-duration-start" class="rounded-2xl p-4 bg-[#F5F2EB]" value="${exp.start}">
+                </div>
+                <div class="flex flex-row place-content-between">
+                    <label for="edit-exp-duration-end">End</label>
+                    <input type="date" id="edit-exp-duration-end" class="rounded-2xl p-4 bg-[#F5F2EB]" value="${exp.end}">
+                </div>
+                <label for="edit-exp-desc">Description</label>
+                <textarea id="edit-exp-desc" class="rounded-2xl p-4 bg-[#F5F2EB]">${exp.desc}</textarea>
+            </div>
+            `;
+        edit_experiences.appendChild(div);
+    });
+    edit_btn.addEventListener("click", () => {
+        worker.first_name = edit_first_name.value;
+        worker.last_name = edit_last_name.value;
+        worker.role = edit_role.value;
+        worker.img = edit_image_url.value;
+        worker.mail = edit_email.value;
+        worker.phone_number = edit_phone.value;
+        const experiences_blocks = edit_experiences.querySelectorAll(".edit-exp-block");
+        let experiences = [];
+        experiences_blocks.forEach((block) => {
+            let title = block.querySelector("#edit-exp-title").value;
+            let company = block.querySelector("#edit-exp-company").value;
+            let start = block.querySelector("#edit-exp-duration-start").value;
+            let end = block.querySelector("#edit-exp-duration-end").value;
+            let desc = block.querySelector("#edit-exp-desc").value;
+            experiences.push({
+                title: title,
+                company: company,
+                start: start,
+                end: end,
+                desc: desc
+            })
+
+        })
+        worker.experiences = experiences;
+
+        localStorage.setItem("workers", JSON.stringify(workers_array));
+        edit_container.classList.add("hidden");
+        while (workers_holder.firstChild) {
+            workers_holder.removeChild(workers_holder.firstChild);
+        }
+        for (let worker of workers_array) {
+            if (worker.assigned === 0) {
+                const worker_card = creer_card_worker_container(worker);
+                worker_card.addEventListener("click", () => {
+                    show_worker_details(worker);
+                });
+                workers_holder.appendChild(worker_card);
+            }
+        }
+    });
+    edit_cancel_btn.addEventListener("click",()=>{
+        edit_container.classList.add("hidden");
+    })
+}
 
 //fonction ceerer card_ worker
 
@@ -235,9 +336,14 @@ function creer_card_worker_container(worker) {
     const right_div = document.createElement("div");
     right_div.classList.add("flex", "flex-row", "place-content-between", "items-center", "w-full");
 
-    const edit_butt = document.createElement("button");
-    edit_butt.textContent = "Edit";
-    edit_butt.classList.add("bg-[#F0A500]", "text-white", "rounded-[16px]", "p-2", "w-[70px]");
+    const edit_butt = document.createElement("i");
+    edit_butt.classList.add("fa-solid","fa-pen-to-square","bg-[#F0A500]","p-3","rounded-[16px]","text-white" );
+
+    edit_butt.addEventListener("click", (event) => {
+        event.stopPropagation();
+        edit_worker_function(worker);
+    })
+
     const delete_button = document.createElement("i");
     delete_button.classList.add("fa-circle-minus", "fa-solid", "text-red-500");
     delete_button.classList.add("absolute", "top-2", "right-2");
@@ -329,10 +435,10 @@ worker_information_container.addEventListener("click", (event) => {
 
 function create_experience_div(experience) {
     const exp_div = document.createElement("div");
-    exp_div.classList.add("flex", "flex-col", "gap-4","p-3","border-2","border-[#B9B8B4]","rounded-2xl")
+    exp_div.classList.add("flex", "flex-col", "gap-4", "p-3", "border-2", "border-[#B9B8B4]", "rounded-2xl")
     const first_div = document.createElement("div");
     first_div.classList.add("flex", "flex-row", "place-content-between");
-    
+
 
     const experience_title_header = document.createElement("h1");
     experience_title_header.textContent = "Title";
@@ -393,8 +499,12 @@ function create_experience_div(experience) {
     return exp_div;
 }
 
+const card_info_edit_button = document.querySelector(".card-info-edit-button");
+
 function show_worker_details(worker) {
-    worker_img.removeChild(worker_img.firstChild);
+    while (worker_img.firstChild) {
+        worker_img.removeChild(worker_img.firstChild);
+    }
     console.log("*********************");
     console.log(worker);
     worker_information.classList.toggle("hidden");
@@ -414,13 +524,19 @@ function show_worker_details(worker) {
     else {
         zone_pop_up.textContent = worker.room;
     }
+    card_info_edit_button.onclick = (event) => {
+        event.stopPropagation();
+        edit_worker_function(worker);
+        worker_information.classList.toggle("hidden");
+    };
+
 
     experiences_pop_up.innerHTML = "";
     const experience_name = document.createElement("h1");
     experience_name.textContent = "Experience";
     experiences_pop_up.append(experience_name);
 
-    
+
     if (worker.experiences.length !== 0) {
         console.log(worker.experiences.length);
         for (let exp of worker.experiences) {
