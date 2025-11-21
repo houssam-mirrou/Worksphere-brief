@@ -4,7 +4,6 @@ const side_image_container = document.querySelector(".side-image-container");
 const ajouter_worker = document.querySelector(".ajouter-worker");
 const workers_holder = document.querySelector(".workers-holder");
 
-
 //plan grids
 
 //desktop
@@ -25,7 +24,8 @@ const security_phone = document.querySelector(".security-phone");
 
 
 //declaration des array qui contient les worker
-let workers_array = [];
+
+let workers_array = JSON.parse(localStorage.getItem("workers")) || [];
 
 
 //worker informations
@@ -61,12 +61,6 @@ let salle_securite = [];
 let salle_personelle = [];
 let salle_archive = [];
 
-let current_salle_conference = [];
-let current_salle_reception = [];
-let current_salle_serveur = [];
-let current_salle_securite = [];
-let current_salle_personelle = [];
-let current_salle_archive = [];
 
 //les fonction pour la verification des champ
 function test_first_name(name) {
@@ -149,13 +143,8 @@ function test_date(exp_start, exp_end) {
     console.log(exp_end);
     let start_date = new Date(exp_start);
     let end_date = new Date(exp_end);
-
     let date = (end_date.getFullYear() - start_date.getFullYear());
-    console.log(date);
-
     let month = end_date.getMonth() - start_date.getMonth();
-    console.log(month);
-
     if (month <= 0 || date < 0) {
         return false;
     }
@@ -252,6 +241,25 @@ function creer_card_worker_container(worker) {
     const delete_button = document.createElement("i");
     delete_button.classList.add("fa-circle-minus", "fa-solid", "text-red-500");
     delete_button.classList.add("absolute", "top-2", "right-2");
+    delete_button.addEventListener("click", (event) => {
+        event.stopPropagation();
+        let index = workers_array.indexOf(worker);
+        console.log(index);
+        workers_array.splice(index, 1);
+        while (workers_holder.firstChild) {
+            workers_holder.removeChild(workers_holder.firstChild);
+        }
+        for (let worker of workers_array) {
+            const worker_card = creer_card_worker_container(worker);
+            worker_card.addEventListener("click", () => {
+                show_worker_details(worker);
+            });
+            workers_holder.appendChild(worker_card);
+        }
+        localStorage.setItem("workers", JSON.stringify(workers_array));
+    })
+
+
     console.log(delete_button);
     const edit_delete_div = document.createElement("div");
     edit_delete_div.classList.add("flex", "flex-row", "items-center", "h-full");
@@ -309,6 +317,7 @@ const email_worker_pop_up = document.querySelector(".email");
 const phone_number_pop_up = document.querySelector(".phone-number");
 const experiences_pop_up = document.querySelector(".experiences");
 const zone_pop_up = document.querySelector(".zone");
+const worker_img = document.querySelector(".worker-img");
 
 worker_information.addEventListener("click", () => {
     worker_information.classList.toggle("hidden");
@@ -320,15 +329,21 @@ worker_information_container.addEventListener("click", (event) => {
 
 function create_experience_div(experience) {
     const exp_div = document.createElement("div");
-
+    exp_div.classList.add("flex", "flex-col", "gap-4")
+    const first_div = document.createElement("div");
+    first_div.classList.add("flex", "flex-row", "place-content-between");
     const experience_name = document.createElement("h1");
     experience_name.textContent = "Experience";
 
     const experience_title_header = document.createElement("h1");
     experience_title_header.textContent = "Title";
 
+
     const experience_title = document.createElement("h1");
     experience_title.textContent = experience.title;
+
+    first_div.appendChild(experience_title_header);
+    first_div.appendChild(experience_title);
 
     const experience_company_title = document.createElement("h1");
     experience_company_title.textContent = "Company";
@@ -336,11 +351,21 @@ function create_experience_div(experience) {
     const experience_company = document.createElement("h1");
     experience_company.textContent = experience.company;
 
+    const second_div = document.createElement("div");
+    second_div.classList.add("flex", "flex-row", "place-content-between");
+    second_div.appendChild(experience_company_title);
+    second_div.appendChild(experience_company);
+
     const experience_start_title = document.createElement("h1");
     experience_start_title.textContent = "Start Date";
 
     const experience_start = document.createElement("h1");
     experience_start.textContent = experience.start;
+
+    const third_div = document.createElement("div");
+    third_div.classList.add("flex", "flex-row", "place-content-between");
+    third_div.appendChild(experience_start_title);
+    third_div.appendChild(experience_start);
 
     const experience_end_title = document.createElement("h1");
     experience_end_title.textContent = "End Date";
@@ -348,21 +373,21 @@ function create_experience_div(experience) {
     const experience_end = document.createElement("h1");
     experience_end.textContent = experience.end;
 
+    const fourth_div = document.createElement("div");
+    fourth_div.classList.add("flex", "flex-row", "place-content-between");
+    fourth_div.appendChild(experience_end_title);
+    fourth_div.appendChild(experience_end);
+
     const experience_descrip = document.createElement("h1");
     experience_descrip.textContent = "Description";
 
     const experience_desc = document.createElement("h1");
     experience_desc.textContent = experience.desc;
 
-    exp_div.appendChild(experience_name);
-    exp_div.appendChild(experience_title_header);
-    exp_div.appendChild(experience_title);
-    exp_div.appendChild(experience_company_title);
-    exp_div.appendChild(experience_company);
-    exp_div.appendChild(experience_start_title);
-    exp_div.appendChild(experience_start);
-    exp_div.appendChild(experience_end_title);
-    exp_div.appendChild(experience_end);
+    exp_div.appendChild(first_div);
+    exp_div.appendChild(second_div);
+    exp_div.appendChild(third_div);
+    exp_div.appendChild(fourth_div);
     exp_div.appendChild(experience_descrip);
     exp_div.appendChild(experience_desc);
 
@@ -370,12 +395,19 @@ function create_experience_div(experience) {
 }
 
 function show_worker_details(worker) {
+    worker_img.removeChild(worker_img.firstChild);
+    console.log("*********************");
+    console.log(worker);
     worker_information.classList.toggle("hidden");
     first_name_worker_pop_up.textContent = worker.first_name;
     last_name_worker_pop_up.textContent = worker.last_name;
     role_worker_pop_up.textContent = worker.role;
     email_worker_pop_up.textContent = worker.mail;
     phone_number_pop_up.textContent = worker.phone_number;
+    const img = document.createElement("img");
+    img.src = worker.img;
+    img.classList.add("rounded-full");
+    worker_img.appendChild(img);
     console.log(zone_pop_up);
     if (worker.assigned === 0) {
         zone_pop_up.textContent = "Unassigned";
@@ -403,6 +435,7 @@ function show_worker_details(worker) {
             zone_pop_up.textContent = "Exists in the receptions room";
         }
     }
+
     experiences_pop_up.innerHTML = "";
     if (worker.experiences.length !== 0) {
         console.log(worker.experiences.length);
@@ -460,10 +493,12 @@ add_btn.addEventListener("click", () => {
 
         form_container.classList.toggle("hidden");
         empty_fields();
+
     }
     console.log(worker);
     workers_array.push(worker);
     console.log(workers_array);
+    localStorage.setItem("workers", JSON.stringify(workers_array));
     reset_salles();
     add_workers_to_fields();
 })
@@ -690,11 +725,6 @@ workers_container.addEventListener("click", () => {
     workers_container.classList.toggle("hidden");
 })
 
-function pop_up_notification() {
-
-}
-
-
 function create_plus_item_container(workers, container, desktop_container) {
     if (container === conference_phone && conf_cpt >= 6) return;
     if (container === reception_phone && reception_cpt >= 6) return;
@@ -910,7 +940,7 @@ search_role_person.addEventListener("input", (event) => {
             temp_filter.push(worker);
         }
         if (worker.role.toLowerCase().includes(event.target.value)) {
-            if (exist_in_array(temp_filter,worker)===false) {
+            if (exist_in_array(temp_filter, worker) === false) {
                 temp_filter.push(worker);
             }
         }
@@ -931,11 +961,28 @@ search_role_person.addEventListener("input", (event) => {
     }
 })
 
-function exist_in_array(temp_filter,worker){
-    for(let wor of temp_filter){
-        if(wor === worker){
+function exist_in_array(temp_filter, worker) {
+    for (let wor of temp_filter) {
+        if (wor === worker) {
             return true;
         }
     }
     return false;
 }
+
+function add_items_in_local() {
+    if (workers_array.length === 0) {
+        return;
+    }
+    for (let worker of workers_array) {
+        const worker_card = creer_card_worker_container(worker);
+        worker_card.addEventListener("click", () => {
+            show_worker_details(worker);
+        });
+        workers_holder.appendChild(worker_card);
+    }
+    add_workers_to_fields();
+}
+
+add_items_in_local();
+
