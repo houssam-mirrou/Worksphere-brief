@@ -4,6 +4,7 @@
     <title>WorkSphere</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="script/script.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 </head>
 
@@ -76,11 +77,13 @@
                 <h1 class="text-5xl font-semibold">Edit worker</h1>
                 <div class="flex flex-row place-content-between items-center">
                     <label for="edit-first-name">First Name</label>
-                    <input type="text" id="edit-first-name" class="rounded-2xl p-4 bg-[#F5F2EB]" placeholder="First Name">
+                    <input type="text" id="edit-first-name" class="rounded-2xl p-4 bg-[#F5F2EB]"
+                        placeholder="First Name">
                 </div>
                 <div class="flex flex-row place-content-between items-center">
                     <label for="edit-last-name">Last Name</label>
-                    <input type="text" id="edit-last-name" class="rounded-2xl p-4 bg-[#F5F2EB] " placeholder="Last Name">
+                    <input type="text" id="edit-last-name" class="rounded-2xl p-4 bg-[#F5F2EB] "
+                        placeholder="Last Name">
                 </div>
                 <div class="flex flex-row place-content-between items-center">
                     <label for="edit-role">Role</label>
@@ -98,7 +101,8 @@
                 <div class="flex felx-row items-center place-content-between">
                     <div class="w-20 h-20 rounded-full bg-[#D9D9D9]">
                     </div>
-                    <input type="url" id="image" class="rounded-2xl p-4 bg-[#F5F2EB] edit-image-url" placeholder="Image URL">
+                    <input type="url" id="image" class="rounded-2xl p-4 bg-[#F5F2EB] edit-image-url"
+                        placeholder="Image URL">
                 </div>
                 <div class="flex flex-row place-content-between items-center">
                     <label for="email">Email</label>
@@ -106,7 +110,8 @@
                 </div>
                 <div class="flex flex-row place-content-between items-center">
                     <label for="phone">Phone</label>
-                    <input type="tel" id="edit-phone" class="rounded-2xl p-4 bg-[#F5F2EB]" placeholder="Your Phone Number">
+                    <input type="tel" id="edit-phone" class="rounded-2xl p-4 bg-[#F5F2EB]"
+                        placeholder="Your Phone Number">
                 </div>
                 <div class="flex flex-col gap-5 edit-experiences">
 
@@ -114,7 +119,8 @@
                 <div class="flex flex-row place-content-between items-center gap-2">
                     <button type="button"
                         class="edit-cancel-btn bg-[#D64545] w-2/5 rounded-[16px] p-5 text-white">Cancel</button>
-                    <button type="button" class="edit-btn bg-[#3BB273] w-2/5 rounded-[16px] p-5 text-white">Edit</button>
+                    <button type="button"
+                        class="edit-btn bg-[#3BB273] w-2/5 rounded-[16px] p-5 text-white">Edit</button>
                 </div>
             </form>
 
@@ -123,7 +129,8 @@
     </div>
     <div class="workers-container hidden w-full bg-black/50 pl-52 pr-52 pt-4 pb-4 z-20 h-full fixed">
         <div class="flex flex-col items-center ">
-            <div class="add-workers-container bg-[#EDEDEC] p-12 text-2xl flex flex-col gap-4 rounded-[16px] w-1/3 overflow-y-scroll max-h-[90vh] w-[500px]">
+            <div
+                class="add-workers-container bg-[#EDEDEC] p-12 text-2xl flex flex-col gap-4 rounded-[16px] w-1/3 overflow-y-scroll max-h-[90vh] w-[500px]">
 
             </div>
         </div>
@@ -141,7 +148,8 @@
                         <h2 class="last-name">Last Name</h2>
                     </div>
                     <div>
-                        <i class="fa-solid fa-pen-to-square bg-[#F0A500] p-4 rounded-[16px] text-white card-info-edit-button"></i>
+                        <i
+                            class="fa-solid fa-pen-to-square bg-[#F0A500] p-4 rounded-[16px] text-white card-info-edit-button"></i>
                     </div>
                 </div>
             </div>
@@ -183,8 +191,13 @@
             <div
                 class="bg-[#FAF8F3] rounded-[16px] place-content-between flex flex-col md:flex-row gap-7 side-image-container h-full">
                 <div class="flex flex-col bg-[#EDEDEC] p-8 rounded-[16px] gap-4 md:w-1/2 lg:w-4/12">
-                    <h1 class="text-4xl font-bold">WorkSphere</h1>
-                    <h2 class="text-3xl">Unassigend Staff</h2>
+                    <div class="flex flex-row place-content-between items-center">
+                        <div>
+                            <h1 class="text-4xl font-bold">WorkSphere</h1>
+                            <h2 class="text-3xl">Unassigend Staff</h2>
+                        </div>
+                        <button class="bg-[#3AAFA9] p-4 rounded-[16px] text-white randomize">Randomize</button>
+                    </div>
                     <div class="flex relative text-xl">
                         <input type="text" placeholder="Search by role or name"
                             class="bg-[#F5F2EB] rounded-3xl p-4 w-full search-role-person">
