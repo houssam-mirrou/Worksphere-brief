@@ -6,7 +6,7 @@ const workers_holder = document.querySelector(".workers-holder");
 
 //plan grids
 
-//desktop
+//desktop divs
 const conference_desktop = document.querySelector(".conference-desktop");
 const reception_desktop = document.querySelector(".reception-desktop");
 const server_desktop = document.querySelector(".server-desktop");
@@ -14,7 +14,7 @@ const break_room_desktop = document.querySelector(".break-room-desktop");
 const archive_desktop = document.querySelector(".archive-desktop");
 const security_desktop = document.querySelector(".security-desktop");
 
-//phone
+//phone divs
 const reception_phone = document.querySelector(".reception-phone");
 const conference_phone = document.querySelector(".conference-phone");
 const break_room_phone = document.querySelector(".break-room-phone");
@@ -26,6 +26,12 @@ const security_phone = document.querySelector(".security-phone");
 //declaration des array qui contient les worker
 
 let workers_array = JSON.parse(localStorage.getItem("workers")) || [];
+
+//appel du fonction qui ajout les workers stocker dans le fichier json
+
+add_workers().then(()=>{
+    add_items_in_local();
+});
 
 
 //worker informations
@@ -42,17 +48,7 @@ const cancel_btn = document.querySelector(".cancel-btn");
 const add_btn = document.querySelector(".add-btn");
 
 
-//les arrays de tout les 
-let it_guys = [];
-let conf_guys = [];
-let recept_guys = [];
-let server_guys = [];
-let achive_guys = [];
-let break_guys = [];
-let security_guys = [];
-let managers_guys = [];
-let cleaning_guys = [];
-let others_gays = [];
+//les arrays de tout les  
 
 let salle_conference = [];
 let salle_reception = [];
@@ -139,13 +135,19 @@ function test_description(description) {
 }
 
 function test_date(exp_start, exp_end) {
-    console.log(exp_start);
-    console.log(exp_end);
-    let start_date = new Date(exp_start);
-    let end_date = new Date(exp_end);
-    let date = (end_date.getFullYear() - start_date.getFullYear());
-    let month = end_date.getMonth() - start_date.getMonth();
-    if (month <= 0 || date < 0) {
+    let start = new Date(exp_start);
+    let end = new Date(exp_end);
+    let now = new Date();
+    if (end <= start) {
+        return false;
+    }
+    if (end > now) {
+        return false;
+    }
+    let yearDiff = end.getFullYear() - start.getFullYear();
+    let monthDiff = yearDiff * 12 + (end.getMonth() - start.getMonth());
+
+    if (monthDiff < 1) {
         return false;
     }
     return true;
@@ -306,7 +308,7 @@ function edit_worker_function(worker) {
             }
         }
     });
-    edit_cancel_btn.addEventListener("click",()=>{
+    edit_cancel_btn.addEventListener("click", () => {
         edit_container.classList.add("hidden");
     })
 }
@@ -337,7 +339,7 @@ function creer_card_worker_container(worker) {
     right_div.classList.add("flex", "flex-row", "place-content-between", "items-center", "w-full");
 
     const edit_butt = document.createElement("i");
-    edit_butt.classList.add("fa-solid","fa-pen-to-square","bg-[#F0A500]","p-3","rounded-[16px]","text-white" );
+    edit_butt.classList.add("fa-solid", "fa-pen-to-square", "bg-[#F0A500]", "p-3", "rounded-[16px]", "text-white");
 
     edit_butt.addEventListener("click", (event) => {
         event.stopPropagation();
@@ -365,16 +367,9 @@ function creer_card_worker_container(worker) {
         localStorage.setItem("workers", JSON.stringify(workers_array));
     })
 
-
-    console.log(delete_button);
-    const edit_delete_div = document.createElement("div");
-    edit_delete_div.classList.add("flex", "flex-row", "items-center", "h-full");
-    edit_delete_div.appendChild(edit_butt);
-
     const delete_div = document.createElement("div");
     delete_div.classList.add("flex", "items-start", "h-full", "justify-start");
     delete_div.appendChild(delete_button);
-    edit_delete_div.appendChild(delete_div);
 
     right_div.appendChild(name_role_div);
     right_div.appendChild(edit_butt);
@@ -414,6 +409,7 @@ function empty_fields() {
     }
 }
 
+//declaration des divs et h1 qui contient les element qui contient les element pour affichage des information  
 
 const worker_information = document.querySelector(".worker-information");
 const first_name_worker_pop_up = document.querySelector(".first-name");
@@ -432,6 +428,8 @@ const worker_information_container = document.querySelector(".worker-information
 worker_information_container.addEventListener("click", (event) => {
     event.stopPropagation();
 })
+
+//fonction pour creer un experience div
 
 function create_experience_div(experience) {
     const exp_div = document.createElement("div");
@@ -501,6 +499,8 @@ function create_experience_div(experience) {
 
 const card_info_edit_button = document.querySelector(".card-info-edit-button");
 
+// fonction qui afficher les information du person
+
 function show_worker_details(worker) {
     while (worker_img.firstChild) {
         worker_img.removeChild(worker_img.firstChild);
@@ -546,6 +546,8 @@ function show_worker_details(worker) {
     }
 }
 
+//add worker button listener pour ajouter un person aux worker array
+
 add_btn.addEventListener("click", () => {
     const experiences_blocks = document.querySelectorAll(".exp-block");
 
@@ -585,7 +587,6 @@ add_btn.addEventListener("click", () => {
     }
     else {
         const worker_div = creer_card_worker_container(worker);
-
 
         worker_div.addEventListener("click", () => {
             show_worker_details(worker);
@@ -651,7 +652,7 @@ add_experience.addEventListener("click", () => {
     experiences_container.appendChild(exp_block);
 })
 
-
+// fonction qui creeer un plus div pour ajouter un worker dans un div
 
 function create_plus_item() {
     const item_div = document.createElement("div");
@@ -665,9 +666,9 @@ function create_plus_item() {
     return item_div;
 }
 
+//fonction qui creer un card de worker pour afficher dans le div aux desktop et telephone
+
 function create_user_on_room(worker, phone_container, desktop_container) {
-
-
 
     const worker_div_phone = document.createElement("div");
     worker_div_phone.className = "bg-[#FAF8F3] flex flex-col relative items-center justify-center rounded-3xl text-center";
@@ -708,8 +709,8 @@ function create_user_on_room(worker, phone_container, desktop_container) {
         event.stopPropagation();
         phone_container.removeChild(worker_div_phone);
         desktop_container.removeChild(worker_div_desktop);
-        worker.assigned = 0;
         filter_workers(workers_array);
+
         while (workers_holder.firstChild) {
             workers_holder.removeChild(workers_holder.firstChild);
         }
@@ -722,13 +723,26 @@ function create_user_on_room(worker, phone_container, desktop_container) {
                 workers_holder.appendChild(temp_worker);
             }
         }
-        if (phone_container === conference_phone) conf_cpt--;
-        else if (phone_container === reception_phone) reception_cpt--;
-        else if (phone_container === break_room_phone) personelle_cpt--;
-        else if (phone_container === server_phone) serveur_cpt--;
-        else if (phone_container === archive_phone) archive_cpt--;
-        else if (phone_container === security_phone) securite_cpt--;
+        if (phone_container === conference_phone) {
+            conf_cpt--;
+        }
+        else if (phone_container === reception_phone) {
+            reception_cpt--;
+        }
+        else if (phone_container === break_room_phone) {
+            personelle_cpt--;
+        }
+        else if (phone_container === server_phone) {
+            serveur_cpt--;
+        }
+        else if (phone_container === archive_phone) {
+            archive_cpt--;
+        }
+        else if (phone_container === security_phone) {
+            securite_cpt--;
+        }
         create_plus_item_container(worker, phone_container, desktop_container);
+        worker.assigned = 0;
         worker.room = null;
         localStorage.setItem("workers", JSON.stringify(workers_array));
 
@@ -739,6 +753,7 @@ function create_user_on_room(worker, phone_container, desktop_container) {
         phone_container.removeChild(worker_div_phone);
         desktop_container.removeChild(worker_div_desktop);
         worker.assigned = 0;
+        worker.room = null;
         filter_workers(workers_array);
         while (workers_holder.firstChild) {
             workers_holder.removeChild(workers_holder.firstChild);
@@ -752,22 +767,38 @@ function create_user_on_room(worker, phone_container, desktop_container) {
                 workers_holder.appendChild(temp_worker);
             }
         }
-        if (phone_container === conference_phone) conf_cpt--;
-        else if (phone_container === reception_phone) reception_cpt--;
-        else if (phone_container === break_room_phone) personelle_cpt--;
-        else if (phone_container === server_phone) serveur_cpt--;
-        else if (phone_container === archive_phone) archive_cpt--;
-        else if (phone_container === security_phone) securite_cpt--;
+        if (phone_container === conference_phone) {
+            conf_cpt--;
+        }
+        else if (phone_container === reception_phone) {
+            reception_cpt--;
+        }
+        else if (phone_container === break_room_phone) {
+            personelle_cpt--;
+        }
+        else if (phone_container === server_phone) {
+            serveur_cpt--;
+        }
+        else if (phone_container === archive_phone) {
+            archive_cpt--;
+        }
+        else if (phone_container === security_phone) {
+            securite_cpt--;
+        }
         create_plus_item_container(worker, phone_container, desktop_container);
-        worker.room = null;
+
         localStorage.setItem("workers", JSON.stringify(workers_array));
 
     });
 
+    //ajouter les eme
+    worker_div_phone.appendChild(img_p);
+    worker_div_phone.appendChild(name_p);
+    worker_div_phone.appendChild(del_p);
 
-    // Build DOM
-    worker_div_phone.append(img_p, name_p, del_p);
-    worker_div_desktop.append(img_d, name_d, del_d);
+    worker_div_desktop.appendChild(img_d);
+    worker_div_desktop.appendChild(name_d)
+    worker_div_desktop.appendChild(del_d);
 
     phone_container.appendChild(worker_div_phone);
     desktop_container.appendChild(worker_div_desktop);
@@ -778,18 +809,8 @@ function create_user_on_room(worker, phone_container, desktop_container) {
 
 
 
-/*
-    first_name: first_name.value,
-        last_name: last_name.value,
-        role: role.value,
-        img: image.value,
-        mail: email.value,
-        phone_number: phone.value,
-        experiences: experiences,
-*/
 
-
-//fonction ceerer card_ worker
+//fonction ceerer card_ worker pour l'affichage lorsque l ajout dun worker dans une salle
 
 function creer_card_worker(worker) {
     const worker_div = document.createElement("div");
@@ -832,21 +853,37 @@ workers_container.addEventListener("click", () => {
     workers_container.classList.toggle("hidden");
 })
 
+//fonction qui creer un plus et aussi ajout du listner pour l'ajout d'un element
+
 function create_plus_item_container(workers, container, desktop_container) {
-    if (container === conference_phone && conf_cpt >= 6) return;
-    if (container === reception_phone && reception_cpt >= 6) return;
-    if (container === break_room_phone && personelle_cpt >= 4) return;
-    if (container === server_phone && serveur_cpt >= 4) return;
-    if (container === archive_phone && archive_cpt >= 4) return;
-    if (container === security_phone && securite_cpt >= 4) return;
+    if (container === conference_phone && conf_cpt >= 6) {
+        return;
+    }
+    if (container === reception_phone && reception_cpt >= 6) {
+        return;
+    }
+    if (container === break_room_phone && personelle_cpt >= 4) {
+        return;
+    }
+    if (container === server_phone && serveur_cpt >= 4) {
+        return;
+    }
+    if (container === archive_phone && archive_cpt >= 4) {
+        return;
+    }
+    if (container === security_phone && securite_cpt >= 4) {
+        return;
+    }
 
-
+    //pour supprimer le ancien plus car il contient les person ancien
     const old_plus = container.querySelector(".plus");
-    if (old_plus) old_plus.parentNode.remove();
-
+    if (old_plus) {
+        old_plus.parentNode.remove();
+    }
     const old_plus_desktop = desktop_container.querySelector(".plus");
-    if (old_plus_desktop) old_plus_desktop.parentNode.remove();
-
+    if (old_plus_desktop) {
+        old_plus_desktop.parentNode.remove();
+    }
 
     const plus_div = create_plus_item();
     const item_plus = plus_div.querySelector(".plus");
@@ -894,31 +931,31 @@ function create_plus_item_container(workers, container, desktop_container) {
                 let room_name = "";
                 if (container === conference_phone) {
                     conf_cpt++;
-                    room_name = "conference";
+                    room_name = "Conference Room";
                 }
                 else if (container === reception_phone) {
                     reception_cpt++;
-                    room_name = "reception";
+                    room_name = "Reception Room";
                 }
                 else if (container === break_room_phone) {
                     personelle_cpt++;
-                    room_name = "break";
+                    room_name = "Break Room";
 
                 }
                 else if (container === server_phone) {
                     serveur_cpt++;
-                    room_name = "server";
+                    room_name = "Server Room";
                 }
                 else if (container === archive_phone) {
                     archive_cpt++;
-                    room_name = "archive";
+                    room_name = "Archive Room";
                 }
                 else if (container === security_phone) {
                     securite_cpt++;
-                    room_name = "security";
+                    room_name = "Security Room";
 
                 }
-                console.log(worker);
+
                 const plusElement = container.querySelector(".plus");
                 const plusElement_desktop = desktop_container.querySelector(".plus");
 
@@ -974,7 +1011,6 @@ function filter_workers(workers_array) {
                 salle_archive.push(worker);
             }
             if (worker.role === "IT Technician") {
-                it_guys.push(worker);
                 salle_conference.push(worker);
                 salle_serveur.push(worker);
                 salle_personelle.push(worker);
@@ -998,6 +1034,9 @@ function filter_workers(workers_array) {
             if (worker.role === "Cleaning") {
                 salle_conference.push(worker);
                 salle_personelle.push(worker);
+                salle_securite.push(worker);
+                salle_serveur.push(worker);
+                salle_reception.push(worker);
             }
             if (worker.role === "Other") {
                 salle_conference.push(worker);
@@ -1017,14 +1056,7 @@ function reset_salles() {
     salle_archive = [];
 }
 
-function reset_fields_containers() {
-    conference_phone.innerHTML = "";
-    reception_phone.innerHTML = "";
-    break_room_phone.innerHTML = "";
-    server_phone.innerHTML = "";
-    archive_phone.innerHTML = "";
-    security_phone.innerHTML = "";
-}
+
 
 
 
@@ -1047,6 +1079,7 @@ let serveur_cpt = 0;
 
 const search_role_person = document.querySelector(".search-role-person");
 
+//fonction qui ajout le logique du filtrage
 search_role_person.addEventListener("input", (event) => {
     while (workers_holder.firstChild) {
         workers_holder.removeChild(workers_holder.firstChild);
@@ -1064,7 +1097,6 @@ search_role_person.addEventListener("input", (event) => {
         return;
     }
     let temp_filter = [];
-    let roles = ["Receptionist", "IT Technician", "Security Agent", "Manager", "Cleaning", "Other"];
     let value = event.target.value;
     for (let worker of workers_array) {
         if (worker.first_name.toLowerCase().includes(value) || worker.last_name.toLowerCase().includes(value)) {
@@ -1077,9 +1109,8 @@ search_role_person.addEventListener("input", (event) => {
         }
     }
 
-
     if (temp_filter.length === 0) {
-        workers_holder.textContent = "There's no on by name or role";
+        workers_holder.textContent = "There's no one by name or role";
     }
     else {
         for (let worker of temp_filter) {
@@ -1092,6 +1123,7 @@ search_role_person.addEventListener("input", (event) => {
     }
 })
 
+//fonction qui tester si un worker ajouter s exister dans l'array
 function exist_in_array(temp_filter, worker) {
     for (let wor of temp_filter) {
         if (wor === worker) {
@@ -1101,6 +1133,8 @@ function exist_in_array(temp_filter, worker) {
     return false;
 }
 
+//fonction qui ajouter les element dans le local storage dans worker array
+
 function add_items_in_local() {
     conf_cpt = archive_cpt = personelle_cpt = reception_cpt = securite_cpt = serveur_cpt = 0;
 
@@ -1109,27 +1143,27 @@ function add_items_in_local() {
         return;
     }
     for (let worker of workers_array) {
-        if (worker.room === "conference") {
+        if (worker.room === "Conference Room") {
             create_user_on_room(worker, conference_phone, conference_desktop);
             conf_cpt++
         }
-        else if (worker.room === "reception") {
+        else if (worker.room === "Reception Room") {
             create_user_on_room(worker, reception_phone, reception_desktop);
             reception_cpt++;
         }
-        else if (worker.room === "server") {
+        else if (worker.room === "Server Room") {
             create_user_on_room(worker, server_phone, server_desktop);
             serveur_cpt++;
         }
-        else if (worker.room === "security") {
+        else if (worker.room === "Security Room") {
             create_user_on_room(worker, security_phone, security_desktop);
             securite_cpt++;
         }
-        else if (worker.room === "break") {
+        else if (worker.room === "Break Room") {
             create_user_on_room(worker, break_room_phone, break_room_desktop);
             personelle_cpt++;
         }
-        else if (worker.room === "archive") {
+        else if (worker.room === "Archive Room") {
             create_user_on_room(worker, archive_phone, archive_desktop);
             archive_cpt++;
 
@@ -1148,5 +1182,250 @@ function add_items_in_local() {
     }
 }
 
-add_items_in_local();
 
+
+const randomize = document.querySelector(".randomize");
+
+function add_items(worker, container, desktop_container) {
+
+    worker.assigned = 1;
+    let room_name = "";
+    if (container === conference_phone) {
+        conf_cpt++;
+        room_name = "Conference Room";
+    }
+    else if (container === reception_phone) {
+        reception_cpt++;
+        room_name = "Reception Room";
+    }
+    else if (container === break_room_phone) {
+        personelle_cpt++;
+        room_name = "Break Room";
+
+    }
+    else if (container === server_phone) {
+        serveur_cpt++;
+        room_name = "Server Room";
+    }
+    else if (container === archive_phone) {
+        archive_cpt++;
+        room_name = "Archive Room";
+    }
+    else if (container === security_phone) {
+        securite_cpt++;
+        room_name = "Security Room";
+
+    }
+    const plusElement = container.querySelector(".plus");
+    const plusElement_desktop = desktop_container.querySelector(".plus");
+
+    if (plusElement) {
+        plusElement.parentNode.remove();
+    }
+    if (plusElement_desktop) {
+        plusElement_desktop.parentNode.remove();
+    }
+    worker.room = room_name;
+
+
+    create_user_on_room(worker, container, desktop_container);
+    filter_workers(workers_array);
+    workers_container.classList.toggle("hidden");
+    while (workers_holder.firstChild) {
+        workers_holder.removeChild(workers_holder.firstChild);
+    }
+    for (let worker of workers_array) {
+        if (worker.assigned === 0) {
+            const temp_worker = creer_card_worker_container(worker);
+            temp_worker.addEventListener("click", () => {
+                show_worker_details(worker);
+            })
+            workers_holder.appendChild(temp_worker);
+        }
+    }
+}
+
+function randomize_workers() {
+    let k = 0;
+    console.log(workers_array);
+    for (let worker of workers_array) {
+        filter_workers(workers_array);
+        if (worker.assigned === 0) {
+            if (worker.role === "Receptionist") {
+                k = Math.floor(Math.random() * 4);
+                if (k === 0 && reception_cpt < 6) {
+                    add_items(worker, reception_phone, reception_desktop);
+                }
+                else if (k === 1 && personelle_cpt < 4) {
+                    add_items(worker, break_room_phone, break_room_desktop);
+                }
+                else if (k === 2 && conf_cpt < 6) {
+                    add_items(worker, conference_phone, conference_desktop);
+                }
+                else if (k === 3 && archive_cpt < 4) {
+                    add_items(worker, archive_phone, archive_desktop);
+                }
+            }
+            else if (worker.role === "IT Technician") {
+                k = Math.floor(Math.random() * 4);
+                if (k === 0 && serveur_cpt < 4) {
+                    add_items(worker, server_phone, server_desktop);
+                }
+                else if (k === 1 && personelle_cpt < 4) {
+                    add_items(worker, break_room_phone, break_room_desktop);
+                }
+                else if (k === 2 && conf_cpt < 6) {
+                    add_items(worker, conference_phone, conference_desktop);
+                }
+                else if (k === 3 && archive_cpt < 4) {
+                    add_items(worker, archive_phone, archive_desktop);
+                }
+            }
+            else if (worker.role === "Security Agent") {
+                k = Math.floor(Math.random() * 4);
+                if (k === 0 && securite_cpt < 4) {
+                    add_items(worker, security_phone, security_desktop);
+                }
+                else if (k === 1 && personelle_cpt < 4) {
+                    add_items(worker, break_room_phone, break_room_desktop);
+                }
+                else if (k === 2 && conf_cpt < 6) {
+                    add_items(worker, conference_phone, conference_desktop);
+                }
+                else if (k === 3 && archive_cpt < 4) {
+                    add_items(worker, archive_phone, archive_desktop);
+                }
+
+            }
+            else if (worker.role === "Manager") {
+                k = Math.floor(Math.random() * 6);
+                if (k === 0 && conf_cpt < 6) {
+                    add_items(worker, conference_phone, conference_desktop);
+                }
+                else if (k === 1 && reception_cpt < 6) {
+                    add_items(worker, reception_phone, reception_desktop);
+                }
+                else if (k === 2 && personelle_cpt < 4) {
+                    add_items(worker, break_room_phone, break_room_desktop);
+                }
+                else if (k === 3 && serveur_cpt < 4) {
+                    add_items(worker, server_phone, server_desktop);
+
+                }
+                else if (k === 4 && archive_cpt < 4) {
+                    add_items(worker, archive_phone, archive_desktop);
+
+                }
+                else if (k === 5 && securite_cpt < 4) {
+                    add_items(worker, security_phone, security_desktop);
+                }
+            }
+            else if (worker.role === "Cleaning") {
+                k = Math.floor(Math.random() * 5);
+                if (k === 0 && conf_cpt < 6) {
+                    add_items(worker, conference_phone, conference_desktop);
+                }
+                else if (k === 1 && reception_cpt < 6) {
+                    add_items(worker, reception_phone, reception_desktop);
+                }
+                else if (k === 2 && personelle_cpt < 4) {
+                    add_items(worker, break_room_phone, break_room_desktop);
+                }
+                else if (k === 3 && serveur_cpt < 4) {
+                    add_items(worker, server_phone, server_desktop);
+
+                }
+                else if (k === 4 && securite_cpt < 4) {
+                    add_items(worker, security_phone, security_desktop);
+                }
+            }
+            else if (worker.role === "Other") {
+                k = Math.floor(Math.random() * 3);
+
+                if (k === 0 && conf_cpt < 6) {
+                    add_items(worker, conference_phone, conference_desktop);
+                }
+                else if (k === 1 && personelle_cpt < 4) {
+                    add_items(worker, break_room_phone, break_room_desktop);
+                }
+                else if (k === 2 && archive_cpt < 4) {
+                    add_items(worker, archive_phone, archive_desktop);
+
+                }
+            }
+        }
+    }
+}
+
+function reset_fields_containers() {
+    while (conference_desktop.firstChild) {
+        conference_desktop.removeChild(conference_desktop.firstChild);
+    }
+    while (conference_phone.firstChild) {
+        conference_phone.removeChild(conference_phone.firstChild);
+    }
+    while (break_room_desktop.firstChild) {
+        break_room_desktop.removeChild(break_room_desktop.firstChild);
+    }
+    while (break_room_phone.firstChild) {
+        break_room_phone.removeChild(break_room_phone.firstChild);
+    }
+    while (reception_desktop.firstChild) {
+        reception_desktop.removeChild(reception_desktop.firstChild);
+    }
+    while (reception_phone.firstChild) {
+        reception_phone.removeChild(reception_phone.firstChild);
+    }
+    while (server_desktop.firstChild) {
+        server_desktop.removeChild(server_desktop.firstChild);
+    }
+    while (server_phone.firstChild) {
+        server_phone.removeChild(server_phone.firstChild);
+    }
+    while (archive_desktop.firstChild) {
+        archive_desktop.removeChild(archive_desktop.firstChild);
+    }
+    while (archive_phone.firstChild) {
+        archive_phone.removeChild(archive_phone.firstChild);
+    }
+    while (security_desktop.firstChild) {
+        security_desktop.removeChild(security_desktop.firstChild);
+    }
+    while (security_phone.firstChild) {
+        security_phone.removeChild(security_phone.firstChild);
+    }
+}
+
+randomize.addEventListener("click", () => {
+    conf_cpt = reception_cpt = personelle_cpt = serveur_cpt = archive_cpt = securite_cpt = 0;
+    reset_fields_containers();
+
+    for (const worker of workers_array) {
+        worker.assigned = 0;
+        worker.room = "";
+    }
+    randomize_workers();
+    create_plus_item_container(salle_conference, conference_phone, conference_desktop);
+    create_plus_item_container(salle_reception, reception_phone, reception_desktop);
+    create_plus_item_container(salle_personelle, break_room_phone, break_room_desktop);
+    create_plus_item_container(salle_serveur, server_phone, server_desktop);
+    create_plus_item_container(salle_archive, archive_phone, archive_desktop);
+    create_plus_item_container(salle_securite, security_phone, security_desktop);
+})
+
+
+async function add_workers() {
+    if (workers_array!==null && workers_array.length > 0) {
+        return;
+    }
+    const res = await fetch("json/default_worker.json");
+    const data = await res.json();
+    workers_array = data;
+
+    localStorage.setItem("workers", JSON.stringify(workers_array));
+
+    
+    reset_salles();
+    add_workers_to_fields();
+
+}
