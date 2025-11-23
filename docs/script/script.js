@@ -1230,7 +1230,6 @@ function add_items(worker, container, desktop_container) {
 
     create_user_on_room(worker, container, desktop_container);
     filter_workers(workers_array);
-    workers_container.classList.toggle("hidden");
     while (workers_holder.firstChild) {
         workers_holder.removeChild(workers_holder.firstChild);
     }
