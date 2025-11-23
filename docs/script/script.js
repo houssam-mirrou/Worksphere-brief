@@ -68,7 +68,7 @@ function test_first_name(name) {
 }
 
 function test_last_name(last_name) {
-    let regex = /^[A-Za-z ]+$/;
+    let regex = /^[A-Za-z ]{3,}$/;
     if (regex.test(last_name) === true) {
         return true;
     }
@@ -239,7 +239,7 @@ function edit_worker_function(worker) {
     edit_email.value = worker.mail;
     edit_phone.value = worker.phone_number;
     edit_experiences.innerHTML = "";
-    worker.experiences.forEach(exp => {
+    worker.experiences.forEach((exp) => {
         const div = document.createElement("div");
         div.classList.add("flex", "flex-col", "gap-2");
         div.innerHTML = `
@@ -317,8 +317,8 @@ function edit_worker_function(worker) {
 
 function creer_card_worker_container(worker) {
     const worker_div = document.createElement("div");
-    worker_div.classList.add("flex", "flex-row", "gap-2", "bg-[#B9B8B4]", "rounded-[16px]", "items-center", "p-5", "relative");
-    console.log(worker.img);
+    worker_div.classList.add("flex", "flex-row", "gap-2",
+        "bg-[#B9B8B4]", "rounded-[16px]", "items-center", "p-5", "relative","worker-card");
     const image = document.createElement("img");
     image.src = worker.img;
     image.classList.add("rounded-full", "w-[50px]", "h-[50px]", "crop", "object-cover",
@@ -329,8 +329,10 @@ function creer_card_worker_container(worker) {
 
     const fullname = document.createElement("h1");
     fullname.textContent = worker.first_name + " " + worker.last_name;
+    fullname.classList.add("worker-card-fullname")
     const worker_role = document.createElement("h1");
     worker_role.textContent = worker.role;
+    worker_role.classList.add("worker-card-role");
 
     name_role_div.appendChild(fullname);
     name_role_div.appendChild(worker_role);
@@ -352,7 +354,6 @@ function creer_card_worker_container(worker) {
     delete_button.addEventListener("click", (event) => {
         event.stopPropagation();
         let index = workers_array.indexOf(worker);
-        console.log(index);
         workers_array.splice(index, 1);
         while (workers_holder.firstChild) {
             workers_holder.removeChild(workers_holder.firstChild);
@@ -435,7 +436,8 @@ worker_information_container.addEventListener("click", (event) => {
 
 function create_experience_div(experience) {
     const exp_div = document.createElement("div");
-    exp_div.classList.add("flex", "flex-col", "gap-4", "p-3", "border-2", "border-[#B9B8B4]", "rounded-2xl")
+    exp_div.classList.add("flex", "flex-col", "gap-4", "p-3", "border-2", 
+        "border-[#B9B8B4]", "rounded-2xl")
     const first_div = document.createElement("div");
     first_div.classList.add("flex", "flex-row", "place-content-between");
 
@@ -507,8 +509,6 @@ function show_worker_details(worker) {
     while (worker_img.firstChild) {
         worker_img.removeChild(worker_img.firstChild);
     }
-    console.log("*********************");
-    console.log(worker);
     worker_information.classList.toggle("hidden");
     first_name_worker_pop_up.textContent = worker.first_name;
     last_name_worker_pop_up.textContent = worker.last_name;
@@ -517,9 +517,9 @@ function show_worker_details(worker) {
     phone_number_pop_up.textContent = worker.phone_number;
     const img = document.createElement("img");
     img.src = worker.img;
-    img.classList.add("rounded-full");
+    img.classList.add("rounded-full", "w-full", "h-full", "crop", "object-cover",
+        "object-center");
     worker_img.appendChild(img);
-    console.log(zone_pop_up);
     if (worker.assigned === 0) {
         zone_pop_up.textContent = "Unassigned";
     }
@@ -540,7 +540,6 @@ function show_worker_details(worker) {
 
 
     if (worker.experiences.length !== 0) {
-        console.log(worker.experiences.length);
         for (let exp of worker.experiences) {
             const experience_div = create_experience_div(exp);
             experiences_pop_up.appendChild(experience_div);
@@ -599,9 +598,7 @@ add_btn.addEventListener("click", () => {
         empty_fields();
 
     }
-    console.log(worker);
     workers_array.push(worker);
-    console.log(workers_array);
     localStorage.setItem("workers", JSON.stringify(workers_array));
     reset_salles();
     add_workers_to_fields();
@@ -673,7 +670,7 @@ function create_plus_item() {
 function create_user_on_room(worker, phone_container, desktop_container) {
 
     const worker_div_phone = document.createElement("div");
-    worker_div_phone.className = "bg-[#FAF8F3] flex flex-col relative items-center justify-center rounded-3xl text-center";
+    worker_div_phone.className = "bg-[#FAF8F3] flex flex-col relative items-center justify-center rounded-3xl text-center worker-card-affiche";
 
     const img_p = document.createElement("img");
     img_p.src = worker.img;
@@ -681,6 +678,7 @@ function create_user_on_room(worker, phone_container, desktop_container) {
 
     const name_p = document.createElement("h1");
     name_p.textContent = worker.first_name + " " + worker.last_name;
+    name_p.className="worker-card-affiche-nom"
 
     const del_p = document.createElement("i");
     del_p.className = "fa-solid fa-circle-minus text-red-500 absolute top-2 right-2";
@@ -816,8 +814,8 @@ function create_user_on_room(worker, phone_container, desktop_container) {
 
 function creer_card_worker(worker) {
     const worker_div = document.createElement("div");
-    worker_div.classList.add("flex", "flex-row", "gap-4", "bg-[#B9B8B4]", "rounded-[16px]", "items-center", "p-5", "relative");
-    console.log(worker.img);
+    worker_div.classList.add("flex", "flex-row", "gap-4", "bg-[#B9B8B4]", "rounded-[16px]", 
+        "items-center", "p-5", "relative");
     const image = document.createElement("img");
     image.src = worker.img;
     image.classList.add("rounded-full", "w-[60px]", "h-[60px]", "crop", "object-cover",
@@ -1003,7 +1001,6 @@ function create_plus_item_container(workers, container, desktop_container) {
 
 
 function filter_workers(workers_array) {
-    console.log(workers_array);
     for (let worker of workers_array) {
         if (worker.assigned === 0) {
             if (worker.role === "Receptionist") {
@@ -1248,7 +1245,6 @@ function add_items(worker, container, desktop_container) {
 
 function randomize_workers() {
     let k = 0;
-    console.log(workers_array);
     for (let worker of workers_array) {
         filter_workers(workers_array);
         if (worker.assigned === 0) {
@@ -1430,3 +1426,5 @@ async function add_workers() {
     add_workers_to_fields();
 
 }
+
+console.log(workers_array);
