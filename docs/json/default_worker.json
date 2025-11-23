@@ -1,0 +1,319 @@
+[
+    {
+        "first_name": "Sarah",
+        "last_name": "Bennani",
+        "role": "Receptionist",
+        "img": "img/profile.png",
+        "mail": "sarah.bennani@company.com",
+        "phone_number": "0612345678",
+        "experiences": [
+            {
+                "title": "Front Desk Assistant",
+                "company": "Atlas Hotel",
+                "start": "2020-01-10",
+                "end": "2021-04-20",
+                "desc": "Managed guests, handled phone calls and booking schedules."
+            }
+        ],
+        "assigned": 0,
+        "room": ""
+    },
+
+    {
+        "first_name": "Imane",
+        "last_name": "Fassi",
+        "role": "Receptionist",
+        "img": "img/profile.png",
+        "mail": "imane.fassi@company.com",
+        "phone_number": "0622233445",
+        "experiences": [],
+        "assigned": 0,
+        "room": ""
+    },
+
+    {
+        "first_name": "Rania",
+        "last_name": "El Malki",
+        "role": "Receptionist",
+        "img": "img/profile.png",
+        "mail": "rania.malki@company.com",
+        "phone_number": "0667812345",
+        "experiences": [
+            {
+                "title": "Call Center Agent",
+                "company": "WebHelp",
+                "start": "2018-05-01",
+                "end": "2019-11-01",
+                "desc": "Handled customer inquiries in French and English."
+            },
+            {
+                "title": "Receptionist",
+                "company": "Safi Clinic",
+                "start": "2020-02-10",
+                "end": "2022-06-30",
+                "desc": "Welcomed patients and assisted with registration."
+            }
+        ],
+        "assigned": 0,
+        "room": ""
+    },
+
+    {
+        "first_name": "Yassine",
+        "last_name": "Khalfi",
+        "role": "IT Technician",
+        "img": "img/profile.png",
+        "mail": "yassine.khalfi@company.com",
+        "phone_number": "0678123456",
+        "experiences": [
+            {
+                "title": "IT Support",
+                "company": "Inwi",
+                "start": "2019-01-01",
+                "end": "2020-12-30",
+                "desc": "Troubleshooting network and hardware issues."
+            }
+        ],
+        "assigned": 0,
+        "room": ""
+    },
+
+    {
+        "first_name": "Redouane",
+        "last_name": "Moujahid",
+        "role": "IT Technician",
+        "img": "img/profile.png",
+        "mail": "redouane.moujahid@company.com",
+        "phone_number": "0688007766",
+        "experiences": [],
+        "assigned": 0,
+        "room": ""
+    },
+
+    {
+        "first_name": "Adil",
+        "last_name": "El Hariri",
+        "role": "IT Technician",
+        "img": "img/profile.png",
+        "mail": "adil.hariri@company.com",
+        "phone_number": "0677332211",
+        "experiences": [
+            {
+                "title": "Network Technician",
+                "company": "Maroc Datacenter",
+                "start": "2020-06-01",
+                "end": "2022-08-30",
+                "desc": "Configured switches and supported LAN/WAN setups."
+            }
+        ],
+        "assigned": 0,
+        "room": ""
+    },
+
+    {
+        "first_name": "Amine",
+        "last_name": "El Idrissi",
+        "role": "Security Agent",
+        "img": "img/profile.png",
+        "mail": "amine.idrissi@company.com",
+        "phone_number": "0645781290",
+        "experiences": [
+            {
+                "title": "Security Guard",
+                "company": "Manpower",
+                "start": "2017-01-10",
+                "end": "2019-03-05",
+                "desc": "Monitored entrances and kept the site secure."
+            }
+        ],
+        "assigned": 0,
+        "room": ""
+    },
+
+    {
+        "first_name": "Hicham",
+        "last_name": "Zerhouni",
+        "role": "Security Agent",
+        "img": "img/profile.png",
+        "mail": "hicham.zerhouni@company.com",
+        "phone_number": "0632445566",
+        "experiences": [],
+        "assigned": 0,
+        "room": ""
+    },
+
+    {
+        "first_name": "Jawad",
+        "last_name": "Berrada",
+        "role": "Security Agent",
+        "img": "img/profile.png",
+        "mail": "jawad.berrada@company.com",
+        "phone_number": "0699887766",
+        "experiences": [
+            {
+                "title": "Security Officer",
+                "company": "Tanger Mall",
+                "start": "2020-01-01",
+                "end": "2022-01-01",
+                "desc": "Handled CCTV monitoring and emergency responses."
+            }
+        ],
+        "assigned": 0,
+        "room": ""
+    },
+
+    {
+        "first_name": "Laila",
+        "last_name": "Harrak",
+        "role": "Manager",
+        "img": "img/profile.png",
+        "mail": "laila.harrak@company.com",
+        "phone_number": "0654321098",
+        "experiences": [
+            {
+                "title": "Team Leader",
+                "company": "Safi Logistics",
+                "start": "2018-04-01",
+                "end": "2020-06-01",
+                "desc": "Supervised admin staff and operations."
+            },
+            {
+                "title": "Operations Manager",
+                "company": "OCP Subcontractor",
+                "start": "2020-07-01",
+                "end": "2023-01-01",
+                "desc": "Managed schedules and productivity reports."
+            }
+        ],
+        "assigned": 0,
+        "room": ""
+    },
+
+    {
+        "first_name": "Nadia",
+        "last_name": "Bakkali",
+        "role": "Manager",
+        "img": "img/profile.png",
+        "mail": "nadia.bakkali@company.com",
+        "phone_number": "0611998877",
+        "experiences": [],
+        "assigned": 0,
+        "room": ""
+    },
+
+    {
+        "first_name": "Tariq",
+        "last_name": "Alaoui",
+        "role": "Manager",
+        "img": "img/profile.png",
+        "mail": "tariq.alaoui@company.com",
+        "phone_number": "0644002211",
+        "experiences": [
+            {
+                "title": "Project Coordinator",
+                "company": "TechBuild",
+                "start": "2019-01-01",
+                "end": "2021-05-01",
+                "desc": "Oversaw team communication and task delegation."
+            }
+        ],
+        "assigned": 0,
+        "room": ""
+    },
+
+    {
+        "first_name": "Fatima",
+        "last_name": "El Amrani",
+        "role": "Cleaning",
+        "img": "img/profile.png",
+        "mail": "fatima.amrani@company.com",
+        "phone_number": "0667895432",
+        "experiences": [],
+        "assigned": 0,
+        "room": ""
+    },
+
+    {
+        "first_name": "Souad",
+        "last_name": "Oukacha",
+        "role": "Cleaning",
+        "img": "img/profile.png",
+        "mail": "souad.oukacha@company.com",
+        "phone_number": "0655667788",
+        "experiences": [
+            {
+                "title": "Office Cleaner",
+                "company": "Maroc Office",
+                "start": "2019-04-01",
+                "end": "2021-04-01",
+                "desc": "Handled cleaning and sanitation tasks."
+            }
+        ],
+        "assigned": 0,
+        "room": ""
+    },
+
+    {
+        "first_name": "Zakia",
+        "last_name": "Khalouki",
+        "role": "Cleaning",
+        "img": "img/profile.png",
+        "mail": "zakia.khalouki@company.com",
+        "phone_number": "0622983344",
+        "experiences": [],
+        "assigned": 0,
+        "room": ""
+    },
+
+    {
+        "first_name": "Omar",
+        "last_name": "Tahiri",
+        "role": "Other",
+        "img": "img/profile.png",
+        "mail": "omar.tahiri@company.com",
+        "phone_number": "0677001122",
+        "experiences": [
+            {
+                "title": "Storekeeper",
+                "company": "LogiStore",
+                "start": "2019-01-10",
+                "end": "2021-03-01",
+                "desc": "Managed inventory and daily warehouse operations."
+            }
+        ],
+        "assigned": 0,
+        "room": ""
+    },
+
+    {
+        "first_name": "Karim",
+        "last_name": "Meskini",
+        "role": "Other",
+        "img": "img/profile.png",
+        "mail": "karim.meskini@company.com",
+        "phone_number": "0633556677",
+        "experiences": [],
+        "assigned": 0,
+        "room": ""
+    },
+
+    {
+        "first_name": "Badr",
+        "last_name": "Lamrani",
+        "role": "Other",
+        "img": "img/profile.png",
+        "mail": "badr.lamrani@company.com",
+        "phone_number": "0611223344",
+        "experiences": [
+            {
+                "title": "Maintenance Assistant",
+                "company": "FixIt Co.",
+                "start": "2019-04-01",
+                "end": "2021-06-01",
+                "desc": "Assisted with repairs and technical inspections."
+            }
+        ],
+        "assigned": 0,
+        "room": ""
+    }
+]

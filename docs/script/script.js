@@ -27,6 +27,12 @@ const security_phone = document.querySelector(".security-phone");
 
 let workers_array = JSON.parse(localStorage.getItem("workers")) || [];
 
+//appel du fonction qui ajout les workers stocker dans le fichier json
+
+add_workers().then(()=>{
+    add_items_in_local();
+});
+
 
 //worker informations
 const first_name = document.querySelector("#first-name");
@@ -703,8 +709,6 @@ function create_user_on_room(worker, phone_container, desktop_container) {
         event.stopPropagation();
         phone_container.removeChild(worker_div_phone);
         desktop_container.removeChild(worker_div_desktop);
-        worker.assigned = 0;
-        worker.room = null;
         filter_workers(workers_array);
 
         while (workers_holder.firstChild) {
@@ -738,6 +742,8 @@ function create_user_on_room(worker, phone_container, desktop_container) {
             securite_cpt--;
         }
         create_plus_item_container(worker, phone_container, desktop_container);
+        worker.assigned = 0;
+        worker.room = null;
         localStorage.setItem("workers", JSON.stringify(workers_array));
 
     });
@@ -1050,14 +1056,7 @@ function reset_salles() {
     salle_archive = [];
 }
 
-function reset_fields_containers() {
-    conference_phone.innerHTML = "";
-    reception_phone.innerHTML = "";
-    break_room_phone.innerHTML = "";
-    server_phone.innerHTML = "";
-    archive_phone.innerHTML = "";
-    security_phone.innerHTML = "";
-}
+
 
 
 
@@ -1183,5 +1182,250 @@ function add_items_in_local() {
     }
 }
 
-add_items_in_local();
 
+
+const randomize = document.querySelector(".randomize");
+
+function add_items(worker, container, desktop_container) {
+
+    worker.assigned = 1;
+    let room_name = "";
+    if (container === conference_phone) {
+        conf_cpt++;
+        room_name = "Conference Room";
+    }
+    else if (container === reception_phone) {
+        reception_cpt++;
+        room_name = "Reception Room";
+    }
+    else if (container === break_room_phone) {
+        personelle_cpt++;
+        room_name = "Break Room";
+
+    }
+    else if (container === server_phone) {
+        serveur_cpt++;
+        room_name = "Server Room";
+    }
+    else if (container === archive_phone) {
+        archive_cpt++;
+        room_name = "Archive Room";
+    }
+    else if (container === security_phone) {
+        securite_cpt++;
+        room_name = "Security Room";
+
+    }
+    const plusElement = container.querySelector(".plus");
+    const plusElement_desktop = desktop_container.querySelector(".plus");
+
+    if (plusElement) {
+        plusElement.parentNode.remove();
+    }
+    if (plusElement_desktop) {
+        plusElement_desktop.parentNode.remove();
+    }
+    worker.room = room_name;
+
+
+    create_user_on_room(worker, container, desktop_container);
+    filter_workers(workers_array);
+    workers_container.classList.toggle("hidden");
+    while (workers_holder.firstChild) {
+        workers_holder.removeChild(workers_holder.firstChild);
+    }
+    for (let worker of workers_array) {
+        if (worker.assigned === 0) {
+            const temp_worker = creer_card_worker_container(worker);
+            temp_worker.addEventListener("click", () => {
+                show_worker_details(worker);
+            })
+            workers_holder.appendChild(temp_worker);
+        }
+    }
+}
+
+function randomize_workers() {
+    let k = 0;
+    console.log(workers_array);
+    for (let worker of workers_array) {
+        filter_workers(workers_array);
+        if (worker.assigned === 0) {
+            if (worker.role === "Receptionist") {
+                k = Math.floor(Math.random() * 4);
+                if (k === 0 && reception_cpt < 6) {
+                    add_items(worker, reception_phone, reception_desktop);
+                }
+                else if (k === 1 && personelle_cpt < 4) {
+                    add_items(worker, break_room_phone, break_room_desktop);
+                }
+                else if (k === 2 && conf_cpt < 6) {
+                    add_items(worker, conference_phone, conference_desktop);
+                }
+                else if (k === 3 && archive_cpt < 4) {
+                    add_items(worker, archive_phone, archive_desktop);
+                }
+            }
+            else if (worker.role === "IT Technician") {
+                k = Math.floor(Math.random() * 4);
+                if (k === 0 && serveur_cpt < 4) {
+                    add_items(worker, server_phone, server_desktop);
+                }
+                else if (k === 1 && personelle_cpt < 4) {
+                    add_items(worker, break_room_phone, break_room_desktop);
+                }
+                else if (k === 2 && conf_cpt < 6) {
+                    add_items(worker, conference_phone, conference_desktop);
+                }
+                else if (k === 3 && archive_cpt < 4) {
+                    add_items(worker, archive_phone, archive_desktop);
+                }
+            }
+            else if (worker.role === "Security Agent") {
+                k = Math.floor(Math.random() * 4);
+                if (k === 0 && securite_cpt < 4) {
+                    add_items(worker, security_phone, security_desktop);
+                }
+                else if (k === 1 && personelle_cpt < 4) {
+                    add_items(worker, break_room_phone, break_room_desktop);
+                }
+                else if (k === 2 && conf_cpt < 6) {
+                    add_items(worker, conference_phone, conference_desktop);
+                }
+                else if (k === 3 && archive_cpt < 4) {
+                    add_items(worker, archive_phone, archive_desktop);
+                }
+
+            }
+            else if (worker.role === "Manager") {
+                k = Math.floor(Math.random() * 6);
+                if (k === 0 && conf_cpt < 6) {
+                    add_items(worker, conference_phone, conference_desktop);
+                }
+                else if (k === 1 && reception_cpt < 6) {
+                    add_items(worker, reception_phone, reception_desktop);
+                }
+                else if (k === 2 && personelle_cpt < 4) {
+                    add_items(worker, break_room_phone, break_room_desktop);
+                }
+                else if (k === 3 && serveur_cpt < 4) {
+                    add_items(worker, server_phone, server_desktop);
+
+                }
+                else if (k === 4 && archive_cpt < 4) {
+                    add_items(worker, archive_phone, archive_desktop);
+
+                }
+                else if (k === 5 && securite_cpt < 4) {
+                    add_items(worker, security_phone, security_desktop);
+                }
+            }
+            else if (worker.role === "Cleaning") {
+                k = Math.floor(Math.random() * 5);
+                if (k === 0 && conf_cpt < 6) {
+                    add_items(worker, conference_phone, conference_desktop);
+                }
+                else if (k === 1 && reception_cpt < 6) {
+                    add_items(worker, reception_phone, reception_desktop);
+                }
+                else if (k === 2 && personelle_cpt < 4) {
+                    add_items(worker, break_room_phone, break_room_desktop);
+                }
+                else if (k === 3 && serveur_cpt < 4) {
+                    add_items(worker, server_phone, server_desktop);
+
+                }
+                else if (k === 4 && securite_cpt < 4) {
+                    add_items(worker, security_phone, security_desktop);
+                }
+            }
+            else if (worker.role === "Other") {
+                k = Math.floor(Math.random() * 3);
+
+                if (k === 0 && conf_cpt < 6) {
+                    add_items(worker, conference_phone, conference_desktop);
+                }
+                else if (k === 1 && personelle_cpt < 4) {
+                    add_items(worker, break_room_phone, break_room_desktop);
+                }
+                else if (k === 2 && archive_cpt < 4) {
+                    add_items(worker, archive_phone, archive_desktop);
+
+                }
+            }
+        }
+    }
+}
+
+function reset_fields_containers() {
+    while (conference_desktop.firstChild) {
+        conference_desktop.removeChild(conference_desktop.firstChild);
+    }
+    while (conference_phone.firstChild) {
+        conference_phone.removeChild(conference_phone.firstChild);
+    }
+    while (break_room_desktop.firstChild) {
+        break_room_desktop.removeChild(break_room_desktop.firstChild);
+    }
+    while (break_room_phone.firstChild) {
+        break_room_phone.removeChild(break_room_phone.firstChild);
+    }
+    while (reception_desktop.firstChild) {
+        reception_desktop.removeChild(reception_desktop.firstChild);
+    }
+    while (reception_phone.firstChild) {
+        reception_phone.removeChild(reception_phone.firstChild);
+    }
+    while (server_desktop.firstChild) {
+        server_desktop.removeChild(server_desktop.firstChild);
+    }
+    while (server_phone.firstChild) {
+        server_phone.removeChild(server_phone.firstChild);
+    }
+    while (archive_desktop.firstChild) {
+        archive_desktop.removeChild(archive_desktop.firstChild);
+    }
+    while (archive_phone.firstChild) {
+        archive_phone.removeChild(archive_phone.firstChild);
+    }
+    while (security_desktop.firstChild) {
+        security_desktop.removeChild(security_desktop.firstChild);
+    }
+    while (security_phone.firstChild) {
+        security_phone.removeChild(security_phone.firstChild);
+    }
+}
+
+randomize.addEventListener("click", () => {
+    conf_cpt = reception_cpt = personelle_cpt = serveur_cpt = archive_cpt = securite_cpt = 0;
+    reset_fields_containers();
+
+    for (const worker of workers_array) {
+        worker.assigned = 0;
+        worker.room = "";
+    }
+    randomize_workers();
+    create_plus_item_container(salle_conference, conference_phone, conference_desktop);
+    create_plus_item_container(salle_reception, reception_phone, reception_desktop);
+    create_plus_item_container(salle_personelle, break_room_phone, break_room_desktop);
+    create_plus_item_container(salle_serveur, server_phone, server_desktop);
+    create_plus_item_container(salle_archive, archive_phone, archive_desktop);
+    create_plus_item_container(salle_securite, security_phone, security_desktop);
+})
+
+
+async function add_workers() {
+    if (workers_array!==null && workers_array.length > 0) {
+        return;
+    }
+    const res = await fetch("json/default_worker.json");
+    const data = await res.json();
+    workers_array = data;
+
+    localStorage.setItem("workers", JSON.stringify(workers_array));
+
+    
+    reset_salles();
+    add_workers_to_fields();
+
+}
