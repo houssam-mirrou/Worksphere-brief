@@ -29,7 +29,7 @@ let workers_array = JSON.parse(localStorage.getItem("workers")) || [];
 
 //appel du fonction qui ajout les workers stocker dans le fichier json
 
-add_workers().then(()=>{
+add_workers().then(() => {
     add_items_in_local();
 });
 
@@ -247,22 +247,22 @@ function edit_worker_function(worker) {
             <div class="flex flex-col gap-4 edit-exp-block">
                 <div class="flex flex-row place-content-between">
                     <label for="edit-exp-title">Job Title</label>
-                    <input type="text" id="edit-exp-title" class="rounded-2xl p-4 bg-[#F5F2EB]" value="${exp.title}">
+                    <input type="text" id="edit-exp-title" class="rounded-2xl p-3 md:p-4 bg-[#F5F2EB]" value="${exp.title}">
                 </div>
                 <div class="flex flex-row place-content-between">
                     <label for="edit-exp-company">Company</label>
-                    <input type="text" id="edit-exp-company" class="rounded-2xl p-4 bg-[#F5F2EB]" value="${exp.company}">
+                    <input type="text" id="edit-exp-company" class="rounded-2xl p-3 md:p-4 bg-[#F5F2EB]" value="${exp.company}">
                 </div>
                 <div class="flex flex-row place-content-between">
                     <label for="edit-exp-duration-start">Start</label>
-                    <input type="date" id="edit-exp-duration-start" class="rounded-2xl p-4 bg-[#F5F2EB]" value="${exp.start}">
+                    <input type="date" id="edit-exp-duration-start" class="rounded-2xl p-3 md:p-4 bg-[#F5F2EB]" value="${exp.start}">
                 </div>
                 <div class="flex flex-row place-content-between">
                     <label for="edit-exp-duration-end">End</label>
-                    <input type="date" id="edit-exp-duration-end" class="rounded-2xl p-4 bg-[#F5F2EB]" value="${exp.end}">
+                    <input type="date" id="edit-exp-duration-end" class="rounded-2xl p-3 md:p-4 bg-[#F5F2EB]" value="${exp.end}">
                 </div>
                 <label for="edit-exp-desc">Description</label>
-                <textarea id="edit-exp-desc" class="rounded-2xl p-4 bg-[#F5F2EB]">${exp.desc}</textarea>
+                <textarea id="edit-exp-desc" class="rounded-2xl p-3 md:p-4 bg-[#F5F2EB]">${exp.desc}</textarea>
             </div>
             `;
         edit_experiences.appendChild(div);
@@ -358,11 +358,13 @@ function creer_card_worker_container(worker) {
             workers_holder.removeChild(workers_holder.firstChild);
         }
         for (let worker of workers_array) {
-            const worker_card = creer_card_worker_container(worker);
-            worker_card.addEventListener("click", () => {
-                show_worker_details(worker);
-            });
-            workers_holder.appendChild(worker_card);
+            if (worker.assigned === 0) {
+                const worker_card = creer_card_worker_container(worker);
+                worker_card.addEventListener("click", () => {
+                    show_worker_details(worker);
+                });
+                workers_holder.appendChild(worker_card);
+            }
         }
         localStorage.setItem("workers", JSON.stringify(workers_array));
     })
@@ -617,29 +619,29 @@ add_experience.addEventListener("click", () => {
 
             <div class="flex flex-row place-content-between items-center">
                 <label>Job Title</label>
-                <input type="text" class="rounded-2xl p-4 bg-[#F5F2EB] exp-title"
+                <input type="text" class="rounded-2xl p-3 md:p-4 bg-[#F5F2EB] exp-title"
                     placeholder="Job title (ex: IT Technician)">
             </div>
 
             <div class="flex flex-row place-content-between items-center">
                 <label>Company</label>
-                <input type="text" class="rounded-2xl p-4 bg-[#F5F2EB] exp-company"
+                <input type="text" class="rounded-2xl p-3 md:p-4 bg-[#F5F2EB] exp-company"
                     placeholder="Company (ex: OCP)">
             </div>
 
             <div class="flex flex-row place-content-between items-center">
                 <label>Start Date:</label>
-                <input type="date" class="rounded-2xl p-4 bg-[#F5F2EB] exp-duration-start">
+                <input type="date" class="rounded-2xl p-3 md:p-4 bg-[#F5F2EB] exp-duration-start">
             </div>
 
             <div class="flex flex-row place-content-between items-center">
                 <label>End Date:</label>
-                <input type="date" class="rounded-2xl p-4 bg-[#F5F2EB] exp-duration-end">
+                <input type="date" class="rounded-2xl p-3 md:p-4 bg-[#F5F2EB] exp-duration-end">
             </div>
 
             <div class="flex flex-col gap-4">
                 <label>Description</label>
-                <textarea class="rounded-2xl p-4 bg-[#F5F2EB] exp-desc"
+                <textarea class="rounded-2xl p-3 md:p-4 bg-[#F5F2EB] exp-desc"
                         placeholder="Description (ex: Maintenance of servers)"></textarea>
             </div>
         `;
@@ -1414,7 +1416,7 @@ randomize.addEventListener("click", () => {
 
 
 async function add_workers() {
-    if (workers_array!==null && workers_array.length > 0) {
+    if (workers_array !== null && workers_array.length > 0) {
         return;
     }
     const res = await fetch("json/default_worker.json");
@@ -1423,7 +1425,7 @@ async function add_workers() {
 
     localStorage.setItem("workers", JSON.stringify(workers_array));
 
-    
+
     reset_salles();
     add_workers_to_fields();
 
